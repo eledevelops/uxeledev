@@ -1,0 +1,277 @@
+/*
+ * uxele.dev design tokens
+ * Source: Figma "Portfolio One-Pager" → Design System page.
+ *
+ * Import AFTER tailwindcss in index.css:
+ *   @import "tailwindcss";
+ *   @import "./theme.css";
+ *
+ * `--*: initial` wipes every Tailwind default (colors, spacing, fonts,
+ * breakpoints…), so only the tokens below generate classes. A default class
+ * like `px-7` or `bg-gray-100` produces no CSS at all.
+ */
+
+/* `dark:` variant follows the .dark class on <html> (set by the theme toggle) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --*: initial;
+
+  /* ── Fonts ─────────────────────────────────────────────── */
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* ── Type scale (Figma text styles → text-{name}) ──────────
+     Each class sets size, line height, letter spacing and weight together. */
+  --text-display: 8.75rem; /* 140 / 140 */
+  --text-display--line-height: 8.75rem;
+  --text-display--letter-spacing: -5px;
+  --text-display--font-weight: 700;
+
+  --text-hero: 4.5rem; /* 72 / 80 */
+  --text-hero--line-height: 5rem;
+  --text-hero--letter-spacing: -3px;
+  --text-hero--font-weight: 700;
+
+  --text-heading-2xl: 3rem; /* 48 / 56 */
+  --text-heading-2xl--line-height: 3.5rem;
+  --text-heading-2xl--letter-spacing: -2px;
+  --text-heading-2xl--font-weight: 700;
+
+  --text-heading-xl: 2.25rem; /* 36 / 44 */
+  --text-heading-xl--line-height: 2.75rem;
+  --text-heading-xl--font-weight: 700;
+
+  --text-intro: 2.25rem; /* 36 / 44 */
+  --text-intro--line-height: 2.75rem;
+  --text-intro--font-weight: 400;
+
+  --text-heading: 1.5rem; /* 24 / 32 */
+  --text-heading--line-height: 2rem;
+  --text-heading--font-weight: 700;
+
+  --text-body-lg: 1.5rem; /* 24 / 32 */
+  --text-body-lg--line-height: 2rem;
+  --text-body-lg--font-weight: 400;
+
+  --text-meta: 1.25rem; /* 20 / 24 */
+  --text-meta--line-height: 1.5rem;
+  --text-meta--font-weight: 400;
+
+  --text-body: 1rem; /* 16 / 24 */
+  --text-body--line-height: 1.5rem;
+  --text-body--font-weight: 400;
+
+  --text-body-bold: 1rem; /* 16 / 24 */
+  --text-body-bold--line-height: 1.5rem;
+  --text-body-bold--font-weight: 700;
+
+  --text-caption: 0.875rem; /* 14 / 20 */
+  --text-caption--line-height: 1.25rem;
+  --text-caption--font-weight: 400;
+
+  --text-overline: 0.75rem; /* 12 / 16 */
+  --text-overline--line-height: 1rem;
+  --text-overline--letter-spacing: 0.5px;
+  --text-overline--font-weight: 500;
+
+  /* ── Spacing (Figma spacing/*) ─────────────────────────────
+     Named steps only: p-4, gap-8, mt-24… Off-scale values like p-7 don't exist. */
+  --spacing-0: 0px;
+  --spacing-half: 0.125rem; /*   2 */
+  --spacing-1: 0.25rem; /*   4 */
+  --spacing-2: 0.5rem; /*   8 */
+  --spacing-3: 0.75rem; /*  12 */
+  --spacing-4: 1rem; /*  16 */
+  --spacing-5: 1.25rem; /*  20 */
+  --spacing-6: 1.5rem; /*  24 */
+  --spacing-8: 2rem; /*  32 */
+  --spacing-10: 2.5rem; /*  40 */
+  --spacing-12: 3rem; /*  48 */
+  --spacing-16: 4rem; /*  64 */
+  --spacing-24: 6rem; /*  96 */
+  --spacing-32: 8rem; /* 128 */
+
+  /* ── Radius (Figma radius/*) ──────────────────────────── */
+  --radius-none: 0px;
+  --radius-sm: 0.25rem; /*  4  swatches, small accents */
+  --radius-lg: 0.5rem; /*  8  buttons, inputs, result panels, media */
+  --radius-xl: 0.75rem; /* 12  navbar, field containers */
+  --radius-2xl: 1rem; /* 16  cards, modals */
+  --radius-full: calc(infinity * 1px); /* pills, monogram, play button */
+
+  /* ── Layout (Figma "Guidelines") ─────────────────────────
+     max-w-navbar, max-w-case-study, max-w-case-frame */
+  --container-navbar: 80rem; /* 1280 */
+  --container-case-study: 76rem; /* 1216, 4 Approach columns */
+  --container-case-frame: 84rem; /* 1344, 64px padding */
+
+  /* Breakpoints: not defined in Figma. Tailwind's md/lg/xl values,
+     kept so responsive prefixes still work. Adjust once mobile is designed. */
+  --breakpoint-md: 48rem; /*  768 */
+  --breakpoint-lg: 64rem; /* 1024 */
+  --breakpoint-xl: 80rem; /* 1280 */
+
+  /* ── Motion (Figma Motion page) ──────────────────────────
+     duration-fast/base/slow, ease-out, ease-in-out.
+     GSAP equivalents: ease-out ≈ "expo.out", ease-in-out ≈ "power2.inOut" */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: var(--ease-out);
+
+  /* ── Palette (raw ramps; prefer the semantic tokens below) ── */
+  --color-coral-50: #fff0e8;
+  --color-coral-100: #ffd4bd;
+  --color-coral-200: #ffb08a;
+  --color-coral-300: #ff8c57;
+  --color-coral-400: #ff6b35;
+  --color-coral-500: #e55a28;
+  --color-coral-600: #cc4a1c;
+  --color-coral-700: #a63b16;
+  --color-coral-800: #802d10;
+  --color-coral-900: #59200b;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #666666;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #1a1a1a;
+  --color-neutral-900: #111111;
+  --color-neutral-950: #0a0a0a;
+
+  --color-red-50: #fef2f2;
+  --color-red-600: #dc2626;
+  --color-green-50: #f0fdf4;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-amber-50: #fffbeb;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-blue-50: #eff6ff;
+  --color-blue-600: #2563eb;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ── Semantic tokens: Light (default) ────────────────────
+     Scoped per property, matching Figma's code syntax:
+     bg-background, text-foreground, border-border… */
+  --background-color-background: #fafafa;
+  --background-color-muted: #f5f5f5;
+  --background-color-foreground: #111111;
+  --background-color-accent: #ff6b35;
+  --background-color-accent-hover: #e55a28;
+  --background-color-accent-muted: #fff0e8;
+  --background-color-glass: #fafafa99; /* 60% */
+  --background-color-glass-strong: #fafafad9; /* 85% */
+  --background-color-tint: #11111114; /*  8% */
+  --background-color-wash: #fafafa26; /* 15% */
+  --background-color-overlay: #0a0a0a33; /* 20% */
+  --background-color-success: #16a34a;
+  --background-color-success-muted: #f0fdf4;
+  --background-color-error: #dc2626;
+  --background-color-error-muted: #fef2f2;
+  --background-color-warning: #d97706;
+  --background-color-warning-muted: #fffbeb;
+  --background-color-info: #2563eb;
+  --background-color-info-muted: #eff6ff;
+
+  --text-color-foreground: #111111;
+  --text-color-muted-foreground: #666666;
+  --text-color-disabled: #a3a3a3;
+  --text-color-background: #fafafa; /* text on bg-foreground panels */
+  --text-color-accent: #cc4a1c;
+  --text-color-success: #15803d;
+  --text-color-error: #dc2626;
+  --text-color-warning: #b45309;
+  --text-color-info: #2563eb;
+
+  --border-color-border: #e5e5e5;
+  --border-color-divider: #d4d4d4;
+  --border-color-ring: #d4d4d4;
+  --border-color-strong: #111111;
+  --border-color-accent: #ff6b35;
+  --border-color-success: #16a34a;
+  --border-color-error: #dc2626;
+  --border-color-warning: #d97706;
+  --border-color-info: #2563eb;
+}
+
+/* ── Semantic tokens: Dark ────────────────────────────────
+   Same names, new values. Classes don't change; the variables do.
+   Status colors have no dark values in Figma yet, so they stay as-is. */
+.dark {
+  --background-color-background: #0a0a0a;
+  --background-color-muted: #111111;
+  --background-color-foreground: #1a1a1a;
+  --background-color-accent: #ff7a4a;
+  --background-color-accent-hover: #ff8c57;
+  --background-color-accent-muted: #2a1810;
+  --background-color-glass: #0a0a0a99;
+  --background-color-glass-strong: #0a0a0ad9;
+  --background-color-tint: #f5f5f514;
+  --background-color-wash: #0a0a0a26;
+  --background-color-overlay: #0a0a0a33;
+
+  --text-color-foreground: #f5f5f5;
+  --text-color-muted-foreground: #999999;
+  --text-color-disabled: #666666;
+  --text-color-background: #f5f5f5;
+  --text-color-accent: #ffb08a;
+
+  --border-color-border: #1a1a1a;
+  --border-color-divider: #404040;
+  --border-color-ring: #404040;
+  --border-color-strong: #f5f5f5;
+  --border-color-accent: #ff7a4a;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--background-color-background);
+    color: var(--text-color-foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Reduced motion: every CSS transition/animation finishes instantly.
+     GSAP is separate: wrap it in gsap.matchMedia() with
+     "(prefers-reduced-motion: no-preference)". */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Motion durations as utilities: duration-fast / duration-base / duration-slow */
+@utility duration-fast {
+  transition-duration: 150ms;
+}
+@utility duration-base {
+  transition-duration: 250ms;
+}
+@utility duration-slow {
+  transition-duration: 400ms;
+}
