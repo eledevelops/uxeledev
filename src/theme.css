@@ -102,9 +102,12 @@
   --radius-2xl: 1rem; /* 16  cards, modals */
   --radius-full: calc(infinity * 1px); /* pills, monogram, play button */
 
+  /* ── Effects (Figma blur/glass) ── backdrop-blur-glass */
+  --blur-glass: 4px;
+
   /* ── Layout (Figma "Guidelines") ─────────────────────────
      max-w-navbar, max-w-case-study, max-w-case-frame */
-  --container-navbar: 80rem; /* 1280 */
+  --container-navbar: 75rem; /* 1200: the navbar bar inside the 1280 layout */
   --container-case-study: 76rem; /* 1216, 4 Approach columns */
   --container-case-frame: 84rem; /* 1344, 64px padding */
 
