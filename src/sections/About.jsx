@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 import { createFlowGradient } from "../lib/flowGradient";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function About() {
   const statementRef = useRef(null);
@@ -22,6 +23,25 @@ export default function About() {
         end: "bottom top",
         onToggle: (self) => (self.isActive ? flow.play() : flow.pause()),
       });
+      const split = SplitText.create(statementRef.current, { type: "words" });
+      gsap.fromTo(
+        split.words,
+        { opacity: 0.0, scale: 1.3 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: statementRef.current,
+            start: "top 90%",
+            end: "bottom 50%",
+            scrub: 2,
+          },
+        },
+      );
+
       return () => flow.pause();
     });
 
