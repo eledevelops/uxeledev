@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local-only demos and references (large files)
+reference/
+
+# Cloudflare local state
+.wrangler/
