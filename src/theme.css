@@ -27,17 +27,17 @@
      Each class sets size, line height, letter spacing and weight together. */
   --text-display: 8.75rem; /* 140 / 140 */
   --text-display--line-height: 8.75rem;
-  --text-display--letter-spacing: -5px;
+  --text-display--letter-spacing: -0.05em;
   --text-display--font-weight: 700;
 
   --text-hero: 4.5rem; /* 72 / 80 */
   --text-hero--line-height: 5rem;
-  --text-hero--letter-spacing: -3px;
+  --text-hero--letter-spacing: -0.03em;
   --text-hero--font-weight: 700;
 
   --text-heading-2xl: 3rem; /* 48 / 56 */
   --text-heading-2xl--line-height: 3.5rem;
-  --text-heading-2xl--letter-spacing: -2px;
+  --text-heading-2xl--letter-spacing: -0.02em;
   --text-heading-2xl--font-weight: 700;
 
   --text-heading-xl: 2.25rem; /* 36 / 44 */
@@ -108,6 +108,7 @@
   /* ── Layout (Figma "Guidelines") ─────────────────────────
      max-w-navbar, max-w-case-study, max-w-case-frame */
   --container-navbar: 75rem; /* 1200: the navbar bar inside the 1280 layout */
+  --container-intro: 62.5rem; /* 1000: Intro statement text */
   --container-case-study: 76rem; /* 1216, 4 Approach columns */
   --container-case-frame: 84rem; /* 1344, 64px padding */
 
