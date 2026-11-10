@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Hero from "./sections/Hero";
 import Intro from "./sections/Intro";
+import Stats from "./sections/Stats";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <main id="top">
         <Hero />
         <Intro />
+        <Stats />
       </main>
       <Footer />
     </>
