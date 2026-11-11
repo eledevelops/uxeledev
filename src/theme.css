@@ -104,6 +104,7 @@
 
   /* ── Effects (Figma blur/glass) ── backdrop-blur-glass */
   --blur-glass: 4px;
+  --blur-card: 16px;
 
   /* ── Layout (Figma "Guidelines") ─────────────────────────
      max-w-navbar, max-w-case-study, max-w-case-frame */
