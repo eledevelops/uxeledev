@@ -161,6 +161,10 @@
   --color-blue-50: #eff6ff;
   --color-blue-600: #2563eb;
 
+  /* Hero water fade (Figma water-fade-light / water-fade-dark) */
+  --color-water-light: #083e56;
+  --color-water-dark: #070b14;
+
   --color-white: #ffffff;
   --color-black: #000000;
   --color-transparent: transparent;

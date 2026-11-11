@@ -1,6 +1,5 @@
 import heroDay from "../assets/images/hero-day.webp";
 import heroNight from "../assets/images/hero-night.webp";
-import waterFade from "../assets/images/water-fade.png";
 
 export default function Hero() {
   return (
@@ -20,7 +19,8 @@ export default function Hero() {
         height="1520"
         className="hidden h-[780px] w-full object-cover md:h-auto dark:block"
       />
-      <img src={waterFade} alt="" className="absolute inset-x-0 bottom-0 hidden h-[70px] w-full md:block" />
+      <div className="absolute inset-x-0 bottom-0 hidden h-[70px] bg-linear-to-t from-water-light to-transparent md:block md:dark:hidden" />
+      <div className="absolute inset-x-0 bottom-0 hidden h-[70px] bg-linear-to-t from-water-dark to-transparent md:dark:block" />
     </section>
   );
 }
