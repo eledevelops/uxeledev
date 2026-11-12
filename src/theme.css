@@ -104,7 +104,7 @@
 
   /* ── Effects (Figma blur/glass) ── backdrop-blur-glass */
   --blur-glass: 4px;
-  --blur-card: 16px;
+  --blur-card: 8px;
 
   /* ── Layout (Figma "Guidelines") ─────────────────────────
      max-w-navbar, max-w-case-study, max-w-case-frame */
@@ -250,6 +250,10 @@
   }
   html.dark {
     color-scheme: dark;
+  }
+  /* Page behind an open modal (case study) doesn't scroll */
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
 
   body {

@@ -1,6 +1,11 @@
-import { projects } from "../data/projects";
+import { useState } from "react";
+import CaseStudy from "../components/CaseStudy";
+import { projects } from "../data";
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
+
   return (
     <section id="projects" className="flex flex-col gap-8 px-6 py-16 md:gap-12 md:px-8 md:py-0">
       <div className="py-8 text-foreground md:p-32">
@@ -14,6 +19,10 @@ export default function Projects() {
           <li key={project.id} className={project.span}>
             <button
               type="button"
+              onClick={() => {
+                setSelectedProject(project);
+                setIsCaseStudyOpen(true);
+              }}
               className="group relative block h-[240px] w-full overflow-hidden rounded-lg border border-border md:h-[365px]">
               <div className="absolute -inset-4 transition duration-base ease-out max-md:blur-card max-md:brightness-75 md:group-hover:blur-card md:group-hover:brightness-75 md:group-focus-visible:blur-card md:group-focus-visible:brightness-75">
                 <img src={project.image} alt="" className="size-full object-cover" loading="lazy" />
@@ -27,6 +36,7 @@ export default function Projects() {
           </li>
         ))}
       </ul>
+      <CaseStudy project={selectedProject} isOpen={isCaseStudyOpen} onClose={() => setIsCaseStudyOpen(false)} />
     </section>
   );
 }

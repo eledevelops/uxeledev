@@ -63,9 +63,9 @@ export default function About() {
           ref={statementRef}
           className="relative bg-white text-heading text-black mix-blend-screen lg:text-heading-xl dark:bg-black dark:text-white dark:mix-blend-multiply">
           For over a decade, I've worked at the intersection of brand, design, and code — building visual identities,
-          marketing systems, and the websites that bring them to life. Along the way, I've collaborated with global
-          teams across multiple countries and cultures, helping companies establish and grow their presence in new
-          markets.
+          marketing systems, and the websites that <span className="">bring them to life</span>. Along the way, I've
+          collaborated with global teams across multiple countries and cultures, helping companies establish and grow
+          their presence in new markets.
         </p>
       </div>
       <hr className="border-border" />
