@@ -127,6 +127,31 @@
   --default-transition-duration: 150ms;
   --default-transition-timing-function: var(--ease-out);
 
+  /* Floating decoration (case study backgrounds): animate-float */
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-16px);
+    }
+  }
+
+  /* Endless sideways drift (case study image backgrounds): animate-drift */
+  --animate-drift: drift 12s linear infinite;
+
+  @keyframes drift {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
   /* ── Palette (raw ramps; prefer the semantic tokens below) ── */
   --color-coral-50: #fff0e8;
   --color-coral-100: #ffd4bd;

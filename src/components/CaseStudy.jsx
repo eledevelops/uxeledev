@@ -3,6 +3,8 @@ import Icon from "./Icon";
 import close from "../assets/icons/close.svg";
 
 export default function CaseStudy({ project, isOpen, onClose }) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -29,7 +31,38 @@ export default function CaseStudy({ project, isOpen, onClose }) {
       className="m-auto h-full max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0
 ">
       {project && (
-        <div className="flex flex-col gap-8 px-6 py-12 md:gap-12 md:p-16">
+        <div className="relative flex flex-col gap-8 px-6 py-12 md:gap-12 md:p-16">
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] overflow-hidden mask-b-from-40% md:h-[760px] ${project.caseStudy.background.className}`}>
+            {project.caseStudy.background.video ? (
+              <video
+                key={project.id}
+                autoPlay={!prefersReducedMotion}
+                preload={prefersReducedMotion ? "none" : "auto"}
+                muted
+                loop
+                playsInline
+                poster={project.caseStudy.background.poster}
+                className="size-full object-cover">
+                <source src={project.caseStudy.background.video} type="video/webm" />
+                <source src={project.caseStudy.background.videoMp4} type="video/mp4" />
+              </video>
+            ) : (
+              <div className="flex h-full w-max animate-drift dark:hue-rotate-180 dark:invert">
+                <img src={project.caseStudy.background.image} alt="" className="h-full w-auto max-w-none" />
+                <img src={project.caseStudy.background.image} alt="" className="h-full w-auto max-w-none" />
+              </div>
+            )}
+            {project.caseStudy.background.floatingImage && (
+              <img
+                src={project.caseStudy.background.floatingImage}
+                alt=""
+                className="absolute top-[34%] right-[6%] w-[40%] max-w-[302px] animate-float opacity-30"
+              />
+            )}
+          </div>
+
           <div className="flex items-start justify-between gap-6 md:pb-8">
             <h2 id="case-study-title" className="text-heading-2xl md:text-display">
               {project.caseStudy.title}

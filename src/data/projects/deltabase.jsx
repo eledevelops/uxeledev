@@ -2,6 +2,8 @@ import deltabaseImage from "../../assets/images/projects/deltabase.webp";
 
 import deltabaseHomepageDesktop from "../../assets/images/case-studies/deltabase/homepage-desktop.webp";
 import deltabaseBrandGuidelines from "../../assets/images/case-studies/deltabase/brand-guidelines.webp";
+import deltabaseHeader from "../../assets/images/case-studies/deltabase/header.webp";
+import deltabaseAShape from "../../assets/images/case-studies/deltabase/a-shape.webp";
 
 const deltabase = {
   id: "deltabase",
@@ -75,6 +77,11 @@ const deltabase = {
         imageClass: "size-full object-cover object-top",
       },
     ],
+    background: {
+      image: deltabaseHeader,
+      floatingImage: deltabaseAShape,
+      className: "opacity-100",
+    },
   },
 };
 export default deltabase;

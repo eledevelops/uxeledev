@@ -1,5 +1,8 @@
 import modelsApiImage from "../../assets/images/projects/models-api.webp";
 import modelsApiModelsPage from "../../assets/images/case-studies/models-api/models-page.webp";
+import sirayaBackgroundWebm from "../../assets/videos/case-studies/siraya/background.webm";
+import sirayaBackgroundMp4 from "../../assets/videos/case-studies/siraya/background.mp4";
+import sirayaBackgroundPoster from "../../assets/videos/case-studies/siraya/poster.webp";
 
 const modelsApi = {
   id: "models-api",
@@ -61,6 +64,12 @@ const modelsApi = {
         className: "col-span-2 lg:col-span-5 lg:h-[365px]",
       },
     ],
+    background: {
+      video: sirayaBackgroundWebm,
+      videoMp4: sirayaBackgroundMp4,
+      poster: sirayaBackgroundPoster,
+      className: "opacity-20",
+    },
   },
 };
 

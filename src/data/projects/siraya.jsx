@@ -7,6 +7,9 @@ import sirayaBrochure01 from "../../assets/images/case-studies/siraya/brochure-0
 import sirayaBrochure02 from "../../assets/images/case-studies/siraya/brochure-02.webp";
 import sirayaBrochure03 from "../../assets/images/case-studies/siraya/brochure-03.webp";
 import sirayaBrochure04 from "../../assets/images/case-studies/siraya/brochure-04.webp";
+import sirayaBackgroundWebm from "../../assets/videos/case-studies/siraya/background.webm";
+import sirayaBackgroundMp4 from "../../assets/videos/case-studies/siraya/background.mp4";
+import sirayaBackgroundPoster from "../../assets/videos/case-studies/siraya/poster.webp";
 
 const siraya = {
   id: "siraya",
@@ -123,6 +126,12 @@ const siraya = {
         imageClass: "size-full object-cover object-top",
       },
     ],
+    background: {
+      video: sirayaBackgroundWebm,
+      videoMp4: sirayaBackgroundMp4,
+      poster: sirayaBackgroundPoster,
+      className: "opacity-30",
+    },
   },
 };
 

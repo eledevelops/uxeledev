@@ -2,6 +2,9 @@ import megaHardImage from "../../assets/images/projects/mega-hard.webp";
 import megaHardHomepageDesktop from "../../assets/images/case-studies/mega-hard/homepage-desktop.webp";
 import megaHardEventBooth from "../../assets/images/case-studies/mega-hard/event-booth.webp";
 import megaHardBrochure from "../../assets/images/case-studies/mega-hard/brochure.webp";
+import megaHardBackgroundWebm from "../../assets/videos/case-studies/mega-hard/background.webm";
+import megaHardBackgroundMp4 from "../../assets/videos/case-studies/mega-hard/background.mp4";
+import megaHardBackgroundPoster from "../../assets/videos/case-studies/mega-hard/poster.webp";
 
 const megaHard = {
   id: "mega-hard",
@@ -85,6 +88,12 @@ const megaHard = {
         imageClass: "size-full object-cover object-top",
       },
     ],
+    background: {
+      video: megaHardBackgroundWebm,
+      videoMp4: megaHardBackgroundMp4,
+      poster: megaHardBackgroundPoster,
+      className: "opacity-12",
+    },
   },
 };
 
