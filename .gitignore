@@ -28,3 +28,5 @@ reference/
 
 # Cloudflare local state
 .wrangler/
+
+.dev.vars*

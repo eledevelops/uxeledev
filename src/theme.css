@@ -112,6 +112,7 @@
   --container-intro: 62.5rem; /* 1000: Intro statement text */
   --container-case-study: 76rem; /* 1216, 4 Approach columns */
   --container-case-frame: 84rem; /* 1344, 64px padding */
+  --container-modal: 35rem; /* 560, contact modal */
 
   /* Breakpoints: not defined in Figma. Tailwind's md/lg/xl values,
      kept so responsive prefixes still work. Adjust once mobile is designed. */
