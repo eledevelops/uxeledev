@@ -14,4 +14,7 @@
   "vars": {
     "TURNSTILE_HOSTNAMES": "uxele.dev,www.uxele.dev",
   },
+  "observability": {
+    "enabled": true,
+  },
 }
