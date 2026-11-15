@@ -2,15 +2,15 @@ import { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { createHeroScene, FRAME_COUNT } from "../lib/heroScene";
+import useAutoplay from "../hooks/useAutoplay";
 
-gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const AUTOPLAY_SECONDS = 11; // 724 frames in 11 s ≈ 66 fps
 const AUTOPLAY_ENABLED = true; // true = the first scroll down plays the video by itself
 
-export default function HeroScrollVideo() {
+export default function HeroScrollVideo({ onFail }) {
   const trackRef = useRef(null);
   const canvasRef = useRef(null);
   const barRef = useRef(null);
@@ -19,17 +19,29 @@ export default function HeroScrollVideo() {
   const set2Ref = useRef(null);
   const stageRef = useRef(null);
 
+  useAutoplay(trackRef, stageRef, { enabled: AUTOPLAY_ENABLED, seconds: AUTOPLAY_SECONDS });
+
   useLayoutEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
+    const isPortrait = canvasRef.current.clientWidth / canvasRef.current.clientHeight < 9 / 16;
     const scene = createHeroScene(canvasRef.current, {
       theme: isDark ? "dark" : "light",
+      folder: isPortrait ? "/hero/portrait" : "/hero",
+      frameWidth: isPortrait ? 608 : 1920,
       onProgress: (fraction) => {
         barRef.current.style.width = `${fraction * 100}%`;
         barRef.current.style.opacity = fraction < 1 ? 1 : 0;
       },
     });
 
-    if (!scene) return;
+    if (!scene) {
+      onFail(true);
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    const handleContextLost = () => onFail(true);
+    canvas.addEventListener("webglcontextlost", handleContextLost);
 
     const themeObserver = new MutationObserver(() => {
       const isDarkNow = document.documentElement.classList.contains("dark");
@@ -42,17 +54,6 @@ export default function HeroScrollVideo() {
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       const video = { frame: 0 };
-      gsap.to(video, {
-        frame: FRAME_COUNT - 1,
-        ease: "none",
-        onUpdate: () => scene.setFrame(video.frame),
-        scrollTrigger: {
-          trigger: trackRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.6,
-        },
-      });
       ScrollTrigger.create({
         trigger: trackRef.current,
         start: "top bottom",
@@ -75,6 +76,7 @@ export default function HeroScrollVideo() {
             scrub: 0.6,
           },
         })
+        .to(video, { frame: FRAME_COUNT - 1, ease: "none", duration: 1, onUpdate: () => scene.setFrame(video.frame) }, 0)
         .to(scrimRef.current, { opacity: 1, duration: 0.03 }, 0.56)
         .to(line1, sharpen, 0.575)
         .to(line2, sharpen, 0.6)
@@ -84,96 +86,16 @@ export default function HeroScrollVideo() {
         .to(line5, sharpen, 0.77)
         .set({}, {}, 1);
 
-      let autoplay = null;
-      let touchStartY = 0;
-      const isAtTop = () => window.scrollY < 50;
-
-      function startAutoplay() {
-        const track = trackRef.current;
-        const videoEnd = track.offsetTop + track.offsetHeight - window.innerHeight;
-        const introTop = track.offsetTop + track.offsetHeight;
-        autoplay = gsap
-          .timeline({ onComplete: () => (autoplay = null) })
-          .to(window, { scrollTo: videoEnd, duration: AUTOPLAY_SECONDS, ease: "none" })
-          .to(window, { scrollTo: introTop, duration: 1.2, ease: "power2.inOut" });
-      }
-
-      function stopAutoplay() {
-        autoplay.kill();
-        autoplay = null;
-      }
-
-      function onWheel(event) {
-        if (autoplay) {
-          if (event.deltaY < 0) stopAutoplay();
-          else event.preventDefault();
-        } else if (event.deltaY > 0 && isAtTop()) {
-          event.preventDefault();
-          startAutoplay();
-        }
-      }
-
-      function onTouchStart(event) {
-        touchStartY = event.touches[0].clientY;
-      }
-
-      function onTouchMove(event) {
-        if (autoplay) {
-          event.preventDefault();
-        } else if (isAtTop() && touchStartY - event.touches[0].clientY > 10) {
-          event.preventDefault();
-          startAutoplay();
-        }
-      }
-
-      function onKeyDown(event) {
-        if (autoplay) {
-          if (!event.repeat) stopAutoplay();
-        } else if (isAtTop() && event.target === document.body && ["ArrowDown", "PageDown", " "].includes(event.key)) {
-          event.preventDefault();
-          startAutoplay();
-        }
-      }
-
-      function onPointerDown() {
-        if (autoplay) stopAutoplay();
-      }
-
-      function onStageClick() {
-        if (!autoplay && isAtTop()) startAutoplay();
-      }
-
-      const stage = stageRef.current;
-
-      if (AUTOPLAY_ENABLED) {
-        window.addEventListener("wheel", onWheel, { passive: false });
-        window.addEventListener("touchstart", onTouchStart, { passive: true });
-        window.addEventListener("touchmove", onTouchMove, { passive: false });
-        window.addEventListener("keydown", onKeyDown);
-        window.addEventListener("pointerdown", onPointerDown);
-        stage.addEventListener("click", onStageClick);
-      }
-
-      stage.addEventListener("click", onStageClick);
-
-      return () => {
-        window.removeEventListener("wheel", onWheel);
-        window.removeEventListener("touchstart", onTouchStart);
-        window.removeEventListener("touchmove", onTouchMove);
-        window.removeEventListener("keydown", onKeyDown);
-        window.removeEventListener("pointerdown", onPointerDown);
-        stage.removeEventListener("click", onStageClick);
-        if (autoplay) autoplay.kill();
-        scene.pause();
-      };
+      return () => scene.pause();
     });
 
     return () => {
+      canvas.removeEventListener("webglcontextlost", handleContextLost);
       themeObserver.disconnect();
       mm.revert();
       scene.destroy();
     };
-  }, []);
+  }, [onFail]);
 
   return (
     <div ref={trackRef} className="relative h-[500vh]">

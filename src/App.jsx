@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HeroScrollVideo from "./components/HeroScrollVideo";
@@ -10,13 +13,23 @@ import About from "./sections/About";
 import Contact from "./sections/Contact";
 
 function App() {
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = usePrefersReducedMotion();
+
+  const saveData = navigator.connection?.saveData === true;
+
+  const [heroFailed, setHeroFailed] = useState(false);
+  const showVideo = !reduceMotion && !saveData && !heroFailed;
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [showVideo]);
 
   return (
     <>
       <Navbar />
       <main id="top">
-        {reduceMotion ? <Hero /> : <HeroScrollVideo />}
+        {showVideo ? <HeroScrollVideo onFail={setHeroFailed} /> : <Hero />}
+
         <Intro />
         <Stats />
         <Projects />

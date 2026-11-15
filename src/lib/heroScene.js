@@ -4,7 +4,7 @@
  * Port of reference/night-scroll-demo (spec: docs/hero-scroll-video.md).
  *
  * Usage:
- *   const scene = createHeroScene(canvas, { theme: "dark", onProgress });
+ *   const scene = createHeroScene(canvas, { theme: "dark", folder: "/hero", frameWidth: 1920, onProgress });
  *   scene.setFrame(120);     // video frame to show, 0 to FRAME_COUNT - 1 (decimals are fine)
  *   scene.setTheme("light"); // swap scenes; the other scene starts loading the first time
  *   scene.play();            // start the render loop
@@ -18,7 +18,6 @@ import { STAR_CENTER_Y } from "./heroStarCenters";
 
 export const FRAME_COUNT = 724; // frames per scene (15 s at 48 fps)
 const FILE_COUNT = FRAME_COUNT / 2; // each file holds two frames
-const FRAME_W = 1920;
 const FRAME_H = 1080;
 const SCENES = {
   dark: { firstFile: 0, stars: true }, // f000–f361
@@ -29,7 +28,7 @@ const MAX_DPR = 2; // never draw at more than 2x, even on 3x phones
 const STARS = { count: 1500, speed: 0.1, trailFade: 0.36, brightness: 0.25 };
 const CENTER_X = 0.5; // the spiral center is always in the middle horizontally
 
-const fileUrl = (index) => `/hero/f${String(index).padStart(3, "0")}.webp`;
+const fileUrl = (folder, index) => `${folder}/f${String(index).padStart(3, "0")}.webp`;
 
 // ── Shaders (GPU programs) ─────────────────────────────────────────
 
@@ -143,7 +142,7 @@ const LOAD_ORDER = buildLoadOrder();
 
 // ── The scene ──────────────────────────────────────────────────────
 
-export function createHeroScene(canvas, { theme, onProgress = () => {} }) {
+export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 1920, onProgress = () => {} }) {
   const gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false });
   if (!gl) return null;
 
@@ -198,7 +197,7 @@ export function createHeroScene(canvas, { theme, onProgress = () => {} }) {
       if (destroyed || next >= LOAD_ORDER.length) return;
       const index = LOAD_ORDER[next++];
       const image = new Image();
-      image.src = fileUrl(SCENES[name].firstFile + index);
+      image.src = fileUrl(folder, SCENES[name].firstFile + index);
       image
         .decode()
         .then(() => {
@@ -278,8 +277,8 @@ export function createHeroScene(canvas, { theme, onProgress = () => {} }) {
     canvas.width = Math.max(1, Math.round(width * dpr));
     canvas.height = Math.max(1, Math.round(height * dpr));
     createTrails();
-    const scale = Math.max(width / FRAME_W, height / FRAME_H);
-    displayW = FRAME_W * scale;
+    const scale = Math.max(width / frameWidth, height / FRAME_H);
+    displayW = frameWidth * scale;
     displayH = FRAME_H * scale;
     offsetX = (width - displayW) / 2;
     offsetY = (height - displayH) / 2;
