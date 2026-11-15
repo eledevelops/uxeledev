@@ -30,6 +30,11 @@
   --text-display--letter-spacing: -0.05em;
   --text-display--font-weight: 700;
 
+  --text-aside: clamp(2.75rem, 8.6vw, 10.75rem); /* 44 → 172, hero "shallow water" aside */
+  --text-aside--line-height: 0.96;
+  --text-aside--letter-spacing: -0.035em;
+  --text-aside--font-weight: 700;
+
   --text-hero: 4.5rem; /* 72 / 80 */
   --text-hero--line-height: 5rem;
   --text-hero--letter-spacing: -0.03em;
@@ -105,6 +110,7 @@
   /* ── Effects (Figma blur/glass) ── backdrop-blur-glass */
   --blur-glass: 4px;
   --blur-card: 8px;
+  --text-shadow-aside: 0 2px 6px var(--background-color-glass), 0 0 40px var(--background-color-glass);
 
   /* ── Layout (Figma "Guidelines") ─────────────────────────
      max-w-navbar, max-w-case-study, max-w-case-frame */
