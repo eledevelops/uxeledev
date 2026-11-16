@@ -6,7 +6,7 @@ export default function About() {
       <FlowText className="text-heading lg:text-heading-xl">
         <p>
           For over a decade, I've worked at the intersection of brand, design, and code — building visual identities,
-          marketing systems, and the websites that <span className="">bring them to life</span>. Along the way, I've
+          marketing systems, and the websites that bring them to life. Along the way, I've
           collaborated with global teams across multiple countries and cultures, helping companies establish and grow
           their presence in new markets.
         </p>

@@ -23,7 +23,7 @@ export default function FlowText({ children, className = "" }) {
         end: "bottom top",
         onToggle: (self) => (self.isActive ? flow.play() : flow.pause()),
       });
-      const split = SplitText.create(textRef.current, { type: "words" });
+      const split = SplitText.create(textRef.current, { type: "words", aria: "none" });
       gsap.fromTo(
         split.words,
         { opacity: 0.0, scale: 1.3 },

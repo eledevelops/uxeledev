@@ -8,7 +8,7 @@ import Hero from "./sections/Hero";
 import Intro from "./sections/Intro";
 import Stats from "./sections/Stats";
 import Projects from "./sections/Projects";
-import Quote from "./sections/Quote";
+
 import Skills from "./sections/Skills";
 import About from "./sections/About";
 import Contact from "./sections/Contact";
@@ -34,9 +34,9 @@ function App() {
         <Intro />
         <Stats />
         <Projects />
-        <Quote />
-        <Skills />
         <About />
+        <Skills />
+
         <Contact />
       </main>
       <Footer />
