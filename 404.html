@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found — Eleazar Madera</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <!-- The site's Tailwind CSS and design tokens (Vite builds this page too, see vite.config.js) -->
+    <link rel="stylesheet" href="/src/index.css" />
+
+    <script>
+      try {
+        const saved = localStorage.getItem("theme");
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved === "dark" || (!saved && systemDark)) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <main class="flex min-h-svh flex-col items-center justify-center gap-8 px-6 py-16 text-center">
+      <div class="w-full md:w-fit">
+        <p class="text-left text-body-lg text-foreground md:text-intro">{ 404 }</p>
+        <!-- Same moving coral gradient as FlowText: the WebGL canvas behind, the text box blends with it -->
+        <div class="relative mix-blend-multiply dark:mix-blend-screen">
+          <canvas id="flow-gradient" aria-hidden="true" class="absolute inset-0 size-full"></canvas>
+          <h1
+            class="relative bg-white text-heading-2xl text-black mix-blend-screen md:text-hero xl:text-display dark:bg-black dark:text-white dark:mix-blend-multiply">
+            Whoa!
+          </h1>
+        </div>
+      </div>
+      <p class="max-w-modal text-body text-muted-foreground">
+        This page doesn't exist. The water was shallower than it looked.
+      </p>
+      <a href="/" class="rounded-lg bg-linear-to-r from-coral-300 to-coral-600 px-4 py-3 text-body-bold text-white">
+        Back home
+      </a>
+    </main>
+    <script type="module" src="/src/notFound.js"></script>
+  </body>
+</html>
