@@ -1,0 +1,40 @@
+# Eleazar Madera (Ele) — Front-End Developer
+
+> Portfolio of Eleazar Madera, a front-end developer with 10+ years of experience engineering brands, campaigns and the websites that carry them. Open to front-end and full-stack roles, freelance projects, and collaborations. Site: https://uxele.dev
+
+The site is a single page (React). This file summarizes it in plain text for AI assistants and crawlers that don't run JavaScript.
+
+## About
+
+- For over a decade, Ele has worked at the intersection of brand, design, and code: building visual identities, marketing systems, and the websites that bring them to life.
+- Has collaborated with global teams across multiple countries and cultures, helping companies establish and grow their presence in new markets.
+- Earlier, as Multimedia Manager at MotionPoint, worked directly with clients to globalize their websites, helping increase conversion rates by 20–40% on average.
+- Bilingual: English and Spanish.
+- Highlights: 5K+ hours of team collaboration, 100+ projects in 5 domains, 10+ years of experience.
+
+## Skills
+
+- Development: React, JavaScript, HTML, CSS, Tailwind CSS, Bootstrap, WordPress, GSAP animation, WebGL.
+- Design: brand identity and logo design, marketing collateral and sales presentations, Adobe Creative Cloud, Figma.
+- Digital content: photography and video production, web media optimization and performance.
+- Soft skills: international experience, teamwork, self-guided, clear communication with clients and stakeholders, translating business goals into design decisions, mentoring, managing projects from brief to launch.
+
+## Selected projects (case studies on the site)
+
+- Siraya (Cloud Infrastructure & CDN, www.sirayatech.com): brand, website and APAC growth — 600+ clients in 18 months.
+- SIRAYA.AI Models (AI / LLM API platform, www.siraya.ai/models): AI model catalog with live filtering.
+- Deltabase (Cloud Infrastructure & CDN, www.deltabase.vn): full brand and website in two weeks.
+- Mega Hard Limited (Network Infrastructure & Security, www.megahardlimited.com): a brand built for the security and gaming niche.
+- MileWeb → Quantil → CDNetworks (Content Delivery Network, www.cdnetworks.com): eight years, three names, one brand journey across Asia-Pacific.
+
+## About this website
+
+- Built by Ele with React, Vite and Tailwind CSS, animated with GSAP, hosted on Cloudflare Workers.
+- The homepage hero is a scroll-driven video drawn on a WebGL canvas, with live animated stars in dark mode.
+
+## Contact
+
+- Email: hello@eleazarmadera.com
+- LinkedIn: https://www.linkedin.com/in/eleazar-madera-451163105/
+- GitHub: https://github.com/eledevelops
+- Contact form: https://uxele.dev/#contact
