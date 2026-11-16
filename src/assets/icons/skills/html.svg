@@ -1,0 +1,26 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icons">
+<g id="Icon / Tech / HTML" clip-path="url(#clip0_206_36)">
+<g id="Background">
+<g id="html-icon">
+<path id="squircle-shape" d="M74.41 0H25.59C11.457 0 0 11.457 0 25.59V74.41C0 88.543 11.457 100 25.59 100H74.41C88.543 100 100 88.543 100 74.41V25.59C100 11.457 88.543 0 74.41 0Z" fill="#E44D27"/>
+<g id="html-logo">
+<g id="Group">
+<path id="Vector" d="M59.7898 25L59.7698 19.27L57.0698 23.42L54.3498 19.24L54.3398 25H50.5298V13.34H54.5998L57.0998 17.44L59.5998 13.34H63.6698V25H59.7898Z" fill="white"/>
+<path id="Vector_2" d="M36.36 25H32.47V21.11H28.93V25H25V13.34H28.89V17.2H32.47V13.34H36.36V25Z" fill="white"/>
+<path id="Vector_3" d="M45.3801 25H41.4901V17.23H38.0601V13.34H48.8301V17.23H45.3701L45.3801 25Z" fill="white"/>
+<path id="Vector_4" d="M75.0001 21.16V25H65.6001V13.34H69.4801V21.16H75.0001Z" fill="white"/>
+</g>
+<path id="Vector_5" d="M29.57 84.36L28.16 68.67H38.18L38.89 76.65L50.02 79.63L61.13 76.65L62.3 63.7L50 63.67L27.72 63.66L25 33.51H75L74.09 43.49H35.95L36.87 53.7H73.17L70.43 84.35L49.97 90.04L29.57 84.36Z" fill="white"/>
+</g>
+<path id="icon-shadow" opacity="0.3" d="M100 72.33V74.4C100 88.54 88.54 99.99 74.41 99.99H25.59C11.46 99.99 0 88.53 0 74.4V72.33C0 86.47 11.46 97.92 25.59 97.92H74.4C88.53 97.92 99.99 86.46 99.99 72.33H100Z" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_206_36">
+<rect width="100" height="100" fill="white"/>
+</clipPath>
+</defs>
+</svg>

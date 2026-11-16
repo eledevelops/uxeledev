@@ -110,6 +110,7 @@
   /* ── Effects (Figma blur/glass) ── backdrop-blur-glass */
   --blur-glass: 4px;
   --blur-card: 8px;
+  --shadow-card: 0 8px 24px -4px #00000014; /* Figma shadow/card: skills fan cards, Global Teams */
   --text-shadow-aside: 0 2px 6px var(--background-color-glass), 0 0 40px var(--background-color-glass);
 
   /* ── Layout (Figma "Guidelines") ─────────────────────────
@@ -119,6 +120,7 @@
   --container-case-study: 76rem; /* 1216, 4 Approach columns */
   --container-case-frame: 84rem; /* 1344, 64px padding */
   --container-modal: 35rem; /* 560, contact modal */
+  --container-card-fan: 35rem; /* 560, skills card fan column */
 
   /* Breakpoints: not defined in Figma. Tailwind's md/lg/xl values,
      kept so responsive prefixes still work. Adjust once mobile is designed. */

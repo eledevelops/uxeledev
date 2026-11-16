@@ -1,0 +1,41 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Page Sections">
+<g id="Content">
+<g id="Skills">
+<g id="Section / Skills">
+<g id="Breakpoint=Desktop">
+<g id="Skills / Cards">
+<g id="Skills / What I do">
+<rect width="1205" height="1992" transform="translate(-952 -1016)"/>
+<g id="Story steps">
+<g id="Step / Design">
+<g id="Icons">
+<g id="adobe-icon 3" clip-path="url(#clip0_206_36)">
+<g id="Background">
+<g id="adobe-icon">
+<path id="squircle-shape" d="M74.41 0H25.59C11.457 0 0 11.457 0 25.59V74.41C0 88.543 11.457 100 25.59 100H74.41C88.543 100 100 88.543 100 74.41V25.59C100 11.457 88.543 0 74.41 0Z" fill="url(#paint0_linear_206_36)"/>
+<path id="icon-shadow" opacity="0.3" d="M100 72.3301V74.4001C100 88.5401 88.54 99.9901 74.41 99.9901H25.59C11.46 99.9901 0 88.5301 0 74.4001V72.3301C0 86.4701 11.46 97.9201 25.59 97.9201H74.4C88.53 97.9201 99.99 86.4601 99.99 72.3301H100Z" fill="#111111"/>
+<path id="adobe-logo" d="M49.4898 41.27L40.2998 64.4H51.2298L55.5698 76.51H20.0498L42.2898 23.48H57.8698L79.9498 76.5L63.4298 76.52L49.4898 41.27Z" fill="#FAFAFA"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_206_36" x1="7.87" y1="9.76" x2="91.23" y2="89.38" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EB1100"/>
+<stop offset="1" stop-color="#CC4A1C"/>
+</linearGradient>
+<clipPath id="clip0_206_36">
+<rect width="100" height="100" fill="white"/>
+</clipPath>
+</defs>
+</svg>
