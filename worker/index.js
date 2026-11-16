@@ -8,6 +8,11 @@ export default {
       if (request.method !== "POST") {
         return Response.json({ error: "Method not allowed" }, { status: 405 });
       }
+      const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
+      const { success } = await env.CONTACT_LIMITER.limit({ key: ip });
+      if (!success) {
+        return Response.json({ error: "Too many messages, please try again in a few mins." }, { status: 429 });
+      }
       return handleContact(request, env);
     }
 
@@ -74,8 +79,14 @@ async function verifyTurnstile(token, request, env) {
     method: "POST",
     body,
   });
+
   const outcome = await response.json();
 
   const allowedHostnames = env.TURNSTILE_HOSTNAMES.split(",");
-  return outcome.success === true && allowedHostnames.includes(outcome.hostname);
+
+  // Cloudflare's test keys (used in local dev) don't send "action", but they do flag themselves
+  const isTestKey = outcome.metadata?.result_with_testing_key === true;
+  const actionOk = outcome.action === "contact" || isTestKey;
+
+  return outcome.success === true && actionOk && allowedHostnames.includes(outcome.hostname);
 }
