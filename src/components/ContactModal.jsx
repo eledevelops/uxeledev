@@ -4,6 +4,27 @@ import close from "../assets/icons/close.svg";
 
 const TURNSTILE_SITE_KEY = import.meta.env.DEV ? "1x00000000000000000000AA" : "0x4AAAAAAF_-1Pjx564p87xP";
 
+// Loads Turnstile's script the first time the form opens, and only once.
+// Returns a Promise that resolves with window.turnstile when the script is ready.
+let turnstilePromise = null;
+
+function loadTurnstile() {
+  if (turnstilePromise === null) {
+    turnstilePromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.onload = () => resolve(window.turnstile);
+      script.onerror = () => {
+        turnstilePromise = null;
+        reject(new Error("Turnstile failed to load"));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return turnstilePromise;
+}
+
 export default function ContactModal({ isOpen, onClose }) {
   const dialogRef = useRef(null);
   const [name, setName] = useState("");
@@ -33,16 +54,24 @@ export default function ContactModal({ isOpen, onClose }) {
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen || widgetIdRef.current !== null || !window.turnstile) {
+    if (!isOpen || widgetIdRef.current !== null) {
       return;
     }
-    widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
-      sitekey: TURNSTILE_SITE_KEY,
-      action: "contact",
-      appearance: "interaction-only",
-      callback: (newToken) => setToken(newToken),
-      "expired-callback": () => setToken(""),
-    });
+    loadTurnstile()
+      .then((turnstile) => {
+        // Already rendered (e.g. React StrictMode runs this effect twice in dev): don't add a second widget
+        if (widgetIdRef.current !== null) {
+          return;
+        }
+        widgetIdRef.current = turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          action: "contact",
+          appearance: "interaction-only",
+          callback: (newToken) => setToken(newToken),
+          "expired-callback": () => setToken(""),
+        });
+      })
+      .catch(() => {});
   }, [isOpen]);
 
   function handleBackdropClick(event) {
@@ -90,7 +119,9 @@ export default function ContactModal({ isOpen, onClose }) {
     } catch {
       setStatus("error");
     } finally {
-      window.turnstile.reset(widgetIdRef.current);
+      if (widgetIdRef.current !== null) {
+        window.turnstile.reset(widgetIdRef.current);
+      }
       setToken("");
     }
   }
