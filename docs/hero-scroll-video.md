@@ -58,12 +58,15 @@ For an instant change, put the new frames under a new folder name (cache busting
 `folder` values in `HeroScrollVideo.jsx`. Headers only apply on Cloudflare and `npm run preview`,
 not `npm run dev`.
 
-### Where the frames live (revisit at the end of the project)
+### Where the frames live (decided 2026-11-17: stay on Workers static assets)
 
-The frames (~136 MB: desktop + portrait sets) are committed to git and deploy with the site. Git
-keeps every version, so each rebuild adds ~136 MB to the repo history. **At the end of the project,
-decide whether to move them to Cloudflare R2** (free tier; needs a bucket, an upload script, a
-subdomain, CORS headers for WebGL, and new `folder` URLs).
+The frames (~137 MB, 1,448 files: desktop + portrait sets) are committed to git and deploy with the
+site as Workers static assets: free, unlimited requests, same origin (no CORS for WebGL), cached at
+the edge, and always in sync with the code. Deploys only upload changed files.
+
+**Decision: keep them here.** Revisit Cloudflare R2 only if the frames get re-exported often (git keeps
+every version, ~137 MB each time) or a deploy nears the 20,000-file limit (free plan). Moving would
+need a bucket, an upload script, a subdomain, CORS headers for WebGL, and new `folder` URLs.
 
 ## Light and dark
 
