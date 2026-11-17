@@ -34,16 +34,14 @@ export default function Contact() {
             <Icon src={linkedin} className="size-8" />
           </a>
           <a
-            href="mailto:hello@eleazarmadera.com"
+            href="mailto:hello@uxele.dev"
             aria-label="Email me"
             className="text-foreground transition-colors hover:text-accent">
             <Icon src={mail} className="size-10" />
           </a>
         </div>
-        <a
-          href="mailto:hello@eleazarmadera.com"
-          className="text-heading text-accent hover:underline md:text-heading-xl">
-          hello@eleazarmadera.com
+        <a href="mailto:hello@uxele.dev" className="text-heading text-accent hover:underline md:text-heading-xl">
+          hello@uxele.dev
         </a>
       </div>
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />

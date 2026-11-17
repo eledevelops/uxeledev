@@ -34,7 +34,7 @@ The site is a single page (React). This file summarizes it in plain text for AI 
 
 ## Contact
 
-- Email: hello@eleazarmadera.com
+- Email: hello@uxele.dev
 - LinkedIn: https://www.linkedin.com/in/eleazar-madera-451163105/
 - GitHub: https://github.com/eledevelops
 - Contact form: https://uxele.dev/#contact

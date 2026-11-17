@@ -243,8 +243,8 @@ export default function ContactModal({ isOpen, onClose }) {
               {turnstileBlocked
                 ? "The spam check couldn't load (a browser extension or network filter may be blocking it). Please email me at"
                 : "Something went wrong. Please try again, or email me at"}{" "}
-              <a href="mailto:hello@eleazarmadera.com" className="underline">
-                hello@eleazarmadera.com
+              <a href="mailto:hello@uxele.dev" className="underline">
+                hello@uxele.dev
               </a>
               .
             </p>
