@@ -31,7 +31,7 @@ export default function ContactModal({ isOpen, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
   const [status, setStatus] = useState("idle");
   const [token, setToken] = useState("");
   const turnstileRef = useRef(null);
@@ -42,7 +42,7 @@ export default function ContactModal({ isOpen, onClose }) {
     setPrevIsOpen(isOpen);
     if (isOpen) {
       setStatus("idle");
-      setErrors({});
+      setTouched({});
     }
   }
 
@@ -95,11 +95,15 @@ export default function ContactModal({ isOpen, onClose }) {
     return newErrors;
   }
 
+  // Remember that the user has left this field, so its message can show
+  function markTouched(field) {
+    setTouched((previous) => ({ ...previous, [field]: true }));
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
-    const newErrors = validate();
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) {
+    setTouched({ name: true, email: true, message: true });
+    if (Object.keys(errors).length > 0) {
       return;
     }
 
@@ -128,6 +132,7 @@ export default function ContactModal({ isOpen, onClose }) {
   }
 
   const isSent = status === "sent";
+  const errors = validate();
 
   return (
     <dialog
@@ -166,7 +171,9 @@ export default function ContactModal({ isOpen, onClose }) {
           <Field
             id="contact-name"
             label="Name"
-            error={errors.name}
+            error={touched.name ? errors.name : undefined}
+            valid={touched.name && !errors.name}
+            onBlur={() => markTouched("name")}
             name="name"
             type="text"
             autoComplete="name"
@@ -178,7 +185,9 @@ export default function ContactModal({ isOpen, onClose }) {
           <Field
             id="contact-email"
             label="Email"
-            error={errors.email}
+            error={touched.email ? errors.email : undefined}
+            valid={touched.email && !errors.email}
+            onBlur={() => markTouched("email")}
             name="email"
             type="email"
             autoComplete="email"
@@ -190,7 +199,9 @@ export default function ContactModal({ isOpen, onClose }) {
           <Field
             id="contact-message"
             label="Message"
-            error={errors.message}
+            error={touched.message ? errors.message : undefined}
+            valid={touched.message && !errors.message}
+            onBlur={() => markTouched("message")}
             multiline
             name="message"
             rows={5}
