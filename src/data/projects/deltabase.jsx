@@ -1,7 +1,7 @@
 import deltabaseImage from "../../assets/images/projects/deltabase.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 
-import deltabaseHomepageDesktop from "../../assets/images/case-studies/deltabase/homepage-desktop.webp";
-import deltabaseBrandGuidelines from "../../assets/images/case-studies/deltabase/brand-guidelines.webp";
+import deltabaseHomepageDesktop from "../../assets/images/case-studies/deltabase/homepage-desktop.webp?w=800;1600;2400&withoutEnlargement&as=picture";
+import deltabaseBrandGuidelines from "../../assets/images/case-studies/deltabase/brand-guidelines.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 import deltabaseHeader from "../../assets/images/case-studies/deltabase/header.webp";
 import deltabaseAShape from "../../assets/images/case-studies/deltabase/a-shape.webp";
 
