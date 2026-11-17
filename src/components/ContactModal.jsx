@@ -34,6 +34,8 @@ export default function ContactModal({ isOpen, onClose }) {
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState("idle");
   const [token, setToken] = useState("");
+  // True when Turnstile's script can't load (blocked by an extension or a network filter)
+  const [turnstileBlocked, setTurnstileBlocked] = useState(false);
   const turnstileRef = useRef(null);
   const widgetIdRef = useRef(null);
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
@@ -43,6 +45,7 @@ export default function ContactModal({ isOpen, onClose }) {
     if (isOpen) {
       setStatus("idle");
       setTouched({});
+      setTurnstileBlocked(false);
     }
   }
 
@@ -68,11 +71,16 @@ export default function ContactModal({ isOpen, onClose }) {
           sitekey: TURNSTILE_SITE_KEY,
           action: "contact",
           appearance: "interaction-only",
-          callback: (newToken) => setToken(newToken),
+          callback: (newToken) => {
+            setToken(newToken);
+            // The visitor clicked Send before the check finished: hide the "one moment" message
+            setStatus((current) => (current === "verifying" ? "idle" : current));
+          },
           "expired-callback": () => setToken(""),
         });
       })
-      .catch(() => {});
+      // Script blocked or offline: say so, and point to email (opening the form again retries)
+      .catch(() => setTurnstileBlocked(true));
   }, [isOpen]);
 
   function handleBackdropClick(event) {
@@ -95,6 +103,9 @@ export default function ContactModal({ isOpen, onClose }) {
     return newErrors;
   }
 
+  // Calculated on every render from the current values (not stored in state)
+  const errors = validate();
+
   // Remember that the user has left this field, so its message can show
   function markTouched(field) {
     setTouched((previous) => ({ ...previous, [field]: true }));
@@ -104,6 +115,13 @@ export default function ContactModal({ isOpen, onClose }) {
     event.preventDefault();
     setTouched({ name: true, email: true, message: true });
     if (Object.keys(errors).length > 0) {
+      return;
+    }
+    // No Turnstile token yet: blocked (its message is already showing) or still checking
+    if (token === "") {
+      if (!turnstileBlocked) {
+        setStatus("verifying");
+      }
       return;
     }
 
@@ -132,7 +150,6 @@ export default function ContactModal({ isOpen, onClose }) {
   }
 
   const isSent = status === "sent";
-  const errors = validate();
 
   return (
     <dialog
@@ -177,6 +194,7 @@ export default function ContactModal({ isOpen, onClose }) {
             name="name"
             type="text"
             autoComplete="name"
+            maxLength={200}
             placeholder="Your name"
             value={name}
             onChange={(event) => setName(event.target.value)}
@@ -191,6 +209,7 @@ export default function ContactModal({ isOpen, onClose }) {
             name="email"
             type="email"
             autoComplete="email"
+            maxLength={254}
             placeholder="you@company.com"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -205,6 +224,7 @@ export default function ContactModal({ isOpen, onClose }) {
             multiline
             name="message"
             rows={5}
+            maxLength={5000}
             placeholder="Tell me about your project..."
             value={message}
             onChange={(event) => setMessage(event.target.value)}
@@ -212,9 +232,17 @@ export default function ContactModal({ isOpen, onClose }) {
 
           <div ref={turnstileRef} />
 
-          {status === "error" && (
+          {status === "verifying" && (
+            <p role="status" className="text-caption text-muted-foreground">
+              One moment: checking you're not a bot. Please press Send again in a second.
+            </p>
+          )}
+
+          {(status === "error" || turnstileBlocked) && (
             <p role="alert" className="text-caption text-error">
-              Something went wrong. Please try again, or email me at{" "}
+              {turnstileBlocked
+                ? "The spam check couldn't load (a browser extension or network filter may be blocking it). Please email me at"
+                : "Something went wrong. Please try again, or email me at"}{" "}
               <a href="mailto:hello@eleazarmadera.com" className="underline">
                 hello@eleazarmadera.com
               </a>
@@ -224,7 +252,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
           <button
             type="submit"
-            disabled={status === "sending" || token === ""}
+            disabled={status === "sending"}
             className="rounded-lg bg-linear-to-r from-coral-300 to-coral-600 px-4 py-3 text-body-bold text-white disabled:cursor-not-allowed disabled:opacity-50">
             {status === "sending" ? "Sending…" : "Send Message"}
           </button>
