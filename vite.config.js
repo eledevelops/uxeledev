@@ -4,7 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { imagetools } from "vite-imagetools";
 
-function imageDirectives(url) {
+// Shared with vite.prerender.config.js, so both builds make the same image files
+export function imageDirectives(url) {
   if (url.searchParams.has("responsive")) {
     return new URLSearchParams({ w: "800;1600;2400", withoutEnlargement: "", as: "picture" });
   }

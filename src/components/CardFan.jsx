@@ -68,13 +68,13 @@ export default function CardFan() {
   return (
     <div ref={fanRef} className="relative aspect-[385/285] w-full md:aspect-[981/678]">
       <div ref={leftCardRef} className={cardClass}>
-        <img src={cardBrandGuidelines} alt="Brand guidelines pages" className="size-full object-cover" />
+        <img src={cardBrandGuidelines} loading="lazy" alt="Brand guidelines pages" className="size-full object-cover" />
       </div>
       <div ref={rightCardRef} className={cardClass}>
-        <img src={cardStickers} alt="A sheet of illustrated stickers" className="size-full object-cover" />
+        <img src={cardStickers} loading="lazy" alt="A sheet of illustrated stickers" className="size-full object-cover" />
       </div>
       <div className={`${cardClass} p-[15%]`}>
-        <img src={cardLogo} alt="A purple and blue brand logo" className="size-full object-contain" />
+        <img src={cardLogo} loading="lazy" alt="A purple and blue brand logo" className="size-full object-contain" />
       </div>
     </div>
   );
