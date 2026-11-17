@@ -1,4 +1,4 @@
-import modelsApiImage from "../../assets/images/projects/models-api.webp";
+import modelsApiImage from "../../assets/images/projects/models-api.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 import modelsApiModelsPage from "../../assets/images/case-studies/models-api/models-page.webp";
 import sirayaBackgroundWebm from "../../assets/videos/case-studies/siraya/background.webm";
 import sirayaBackgroundMp4 from "../../assets/videos/case-studies/siraya/background.mp4";

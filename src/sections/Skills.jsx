@@ -5,6 +5,9 @@ import { skillGroups, softSkills } from "../data/skills";
 import check from "../assets/icons/check.svg";
 import whatIDoBackground from "../assets/images/skills/what-i-do-bg.webp";
 import globalTeams from "../assets/images/skills/global-teams.webp";
+// Phones show only the middle of the wide photo (object-cover in a tall box), so they get a centered
+// portrait crop made at build time by vite-imagetools: same look, about a third of the bytes.
+import globalTeamsPhone from "../assets/images/skills/global-teams.webp?w=820&h=1261&fit=cover&position=center";
 import eleStanding from "../assets/images/skills/ele-standing.webp";
 
 export default function Skills() {
@@ -56,12 +59,16 @@ export default function Skills() {
 
       {/* Global Teams: photo with the quote card hanging over its bottom edge */}
       <div className="relative shadow-card">
-        <img
-          src={globalTeams}
-          alt="Eleazar and four teammates laughing in a cloud of colored powder"
-          loading="lazy"
-          className="absolute inset-0 size-full object-cover"
-        />
+        <picture>
+          {/* Up to 440px wide (phones): the portrait crop */}
+          <source media="(max-width: 27.5rem)" srcSet={globalTeamsPhone} />
+          <img
+            src={globalTeams}
+            alt="Eleazar and four teammates laughing in a cloud of colored powder"
+            loading="lazy"
+            className="absolute inset-0 size-full object-cover"
+          />
+        </picture>
         <div className="relative flex min-h-[42.5rem] flex-col items-center gap-3 px-6 py-12 text-center text-black md:min-h-[59rem] md:gap-8 md:px-16 md:py-24">
           <h3 className="text-heading-2xl md:text-hero">Global Teams</h3>
           <p className="max-w-intro text-body-lg md:text-intro">

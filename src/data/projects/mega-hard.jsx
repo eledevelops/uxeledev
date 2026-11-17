@@ -1,4 +1,4 @@
-import megaHardImage from "../../assets/images/projects/mega-hard.webp";
+import megaHardImage from "../../assets/images/projects/mega-hard.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 import megaHardHomepageDesktop from "../../assets/images/case-studies/mega-hard/homepage-desktop.webp";
 import megaHardEventBooth from "../../assets/images/case-studies/mega-hard/event-booth.webp";
 import megaHardBrochure from "../../assets/images/case-studies/mega-hard/brochure.webp";

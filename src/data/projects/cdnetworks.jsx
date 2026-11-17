@@ -1,4 +1,4 @@
-import cdnetworksImage from "../../assets/images/projects/cdnetworks.webp";
+import cdnetworksImage from "../../assets/images/projects/cdnetworks.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 
 import cdnetworksHomepageDesktop from "../../assets/images/case-studies/cdnetworks/homepage-desktop.webp";
 import cdnetworksHomepageMobile from "../../assets/images/case-studies/cdnetworks/homepage-mobile.webp";

@@ -1,4 +1,4 @@
-import sirayaImage from "../../assets/images/projects/siraya.webp";
+import sirayaImage from "../../assets/images/projects/siraya.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 import sirayaHomepageDesktop from "../../assets/images/case-studies/siraya/homepage-desktop.webp";
 import sirayaHomepageMobile from "../../assets/images/case-studies/siraya/homepage-mobile.webp";
 import sirayaRobot from "../../assets/images/case-studies/siraya/robot.webp";

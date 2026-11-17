@@ -1,4 +1,4 @@
-import deltabaseImage from "../../assets/images/projects/deltabase.webp";
+import deltabaseImage from "../../assets/images/projects/deltabase.webp?w=800;1600;2400&withoutEnlargement&as=picture";
 
 import deltabaseHomepageDesktop from "../../assets/images/case-studies/deltabase/homepage-desktop.webp";
 import deltabaseBrandGuidelines from "../../assets/images/case-studies/deltabase/brand-guidelines.webp";
