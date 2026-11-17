@@ -6,13 +6,82 @@ import sun from "../assets/icons/sun.svg";
 import separator from "../assets/icons/separator.svg";
 import menu from "../assets/icons/menu.svg";
 import close from "../assets/icons/close.svg";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// The page sections that have a navbar link, in page order.
+// The navbar links, the mobile menu and the active-section triggers are all built from this one list.
+const sectionLinks = [
+  { id: "projects", label: "Projects" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "contact", label: "Contact" },
+];
 
 export default function Navbar() {
+  const [activeSection, setActiveSection] = useState("top");
+
+  useEffect(() => {
+    const triggers = [];
+    for (const link of sectionLinks) {
+      const trigger = ScrollTrigger.create({
+        trigger: `#${link.id}`,
+        start: "top center",
+        end: "bottom center",
+        onToggle: (self) => {
+          if (self.isActive) {
+            setActiveSection(link.id);
+          }
+        },
+      });
+      triggers.push(trigger);
+    }
+
+    // Scrolling back up above Projects (into the hero): no section link is active
+    triggers.push(
+      ScrollTrigger.create({
+        trigger: "#projects",
+        start: "top center",
+        onLeaveBack: () => setActiveSection("top"),
+      }),
+    );
+
+    return () => {
+      for (const trigger of triggers) {
+        trigger.kill();
+      }
+    };
+  }, []);
+
+  // Slides the one underline to the active desktop link
+  useEffect(() => {
+    function placeIndicator() {
+      const indicator = indicatorRef.current;
+      const activeLink = navLinksRef.current.querySelector('[aria-current="true"]');
+      if (!activeLink) {
+        indicator.style.opacity = "0";
+        return;
+      }
+      const x = activeLink.offsetLeft + activeLink.offsetWidth / 2 - indicator.offsetWidth / 2;
+      const y = activeLink.offsetTop + activeLink.offsetHeight - indicator.offsetHeight;
+      indicator.style.transform = `translate(${x}px, ${y}px)`;
+      indicator.style.opacity = "1";
+    }
+
+    placeIndicator();
+    window.addEventListener("resize", placeIndicator);
+    return () => window.removeEventListener("resize", placeIndicator);
+  }, [activeSection]);
+
   const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"));
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const overlayRef = useRef(null);
+  const navLinksRef = useRef(null);
+  const indicatorRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -67,6 +136,21 @@ export default function Navbar() {
     localStorage.setItem("theme", next ? "dark" : "light");
   }
 
+  function desktopLink(link) {
+    const isActive = activeSection === link.id;
+    return (
+      <li key={link.id}>
+        <a
+          href={`#${link.id}`}
+          aria-current={isActive ? "true" : undefined}
+          className={`flex flex-col items-center gap-1 text-caption transition-colors duration-base ${isActive ? "text-accent" : "text-foreground"}`}>
+          {link.label}
+          <span className="h-half w-[14px]"></span>
+        </a>
+      </li>
+    );
+  }
+
   return (
     <header className="fixed inset-x-0 top-4 z-50 px-5">
       <nav
@@ -115,40 +199,26 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <ul className="hidden items-center gap-8 md:flex">
-          <li>
-            <a href="#projects" className="flex flex-col items-center gap-1 text-caption text-foreground">
-              Projects
-              <span className="h-half w-[14px]"></span>
-            </a>
-          </li>
-          <li>
-            <a href="#about" className="flex flex-col items-center gap-1 text-caption text-foreground">
-              About
-              <span className="h-half w-[14px]"></span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#top"
-              aria-label="Back to top"
-              className="flex text-foreground transition-colors hover:text-accent">
-              <Icon src={logo} className="size-8" />
-            </a>
-          </li>
-          <li>
-            <a href="#skills" className="flex flex-col items-center gap-1 text-caption text-foreground">
-              Skills
-              <span className="h-half w-[14px]"></span>
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="flex flex-col items-center gap-1 text-caption text-foreground">
-              Contact
-              <span className="h-half w-[14px]"></span>
-            </a>
-          </li>
-        </ul>
+        <div ref={navLinksRef} className="relative hidden md:block">
+          <ul className="flex items-center gap-8">
+            {sectionLinks.slice(0, 2).map(desktopLink)}
+            <li>
+              <a
+                href="#top"
+                aria-label="Back to top"
+                className="flex text-foreground transition-colors hover:text-accent">
+                <Icon src={logo} className="size-8" />
+              </a>
+            </li>
+            {sectionLinks.slice(2).map(desktopLink)}
+          </ul>
+          {/* The one underline: it slides to whichever link is active */}
+          <span
+            ref={indicatorRef}
+            aria-hidden="true"
+            className="absolute top-0 left-0 h-half w-[14px] rounded-full bg-accent opacity-0 transition-[transform,opacity] duration-slow ease-out"
+          />
+        </div>
         <div className="hidden flex-1 justify-end md:flex">
           <button
             type="button"
@@ -195,30 +265,25 @@ export default function Navbar() {
 
           <ul className="flex flex-col items-center gap-6 text-heading-xl">
             <li>
-              <a href="#top" onClick={() => setIsMenuOpen(false)} className="text-accent">
+              <a
+                href="#top"
+                onClick={() => setIsMenuOpen(false)}
+                aria-current={activeSection === "top" ? "true" : undefined}
+                className={activeSection === "top" ? "text-accent" : "text-foreground"}>
                 Home
               </a>
             </li>
-            <li>
-              <a href="#projects" onClick={() => setIsMenuOpen(false)} className="text-foreground">
-                Projects
-              </a>
-            </li>
-            <li>
-              <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-foreground">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#skills" onClick={() => setIsMenuOpen(false)} className="text-foreground">
-                Skills
-              </a>
-            </li>
-            <li>
-              <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-foreground">
-                Contact
-              </a>
-            </li>
+            {sectionLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  onClick={() => setIsMenuOpen(false)}
+                  aria-current={activeSection === link.id ? "true" : undefined}
+                  className={activeSection === link.id ? "text-accent" : "text-foreground"}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
 
           <div className="flex flex-col gap-4">

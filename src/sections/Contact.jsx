@@ -9,7 +9,7 @@ export default function Contact() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <section id="contact" className="mx-auto flex max-w-case-study flex-col gap-8 px-6 py-16 lg:px-24 lg:py-32">
+    <section id="contact" className="mx-auto flex max-w-case-study flex-col gap-8 px-6 py-16 lg:px-24 lg:py-16">
       <FlowText className="text-heading-2xl md:text-hero xl:text-display">
         <h2>Let's build an experience to remember.</h2>
       </FlowText>
