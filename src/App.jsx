@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main id="top">
+      <main id="top" className="overflow-x-clip">
         {showVideo ? <HeroScrollVideo onFail={setHeroFailed} /> : <Hero />}
 
         <Intro />

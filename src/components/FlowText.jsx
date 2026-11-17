@@ -56,11 +56,14 @@ export default function FlowText({ children, className = "" }) {
   }, []);
 
   return (
-    <div className="relative mix-blend-multiply dark:mix-blend-screen">
+    // The words start at scale 1.3 and shrink into place, so while they animate they're bigger than the text.
+    // The box bleeds 0.75em out on each side (negative margin + the same padding inside), so the gradient
+    // covers the enlarged words while the text itself stays exactly where it was.
+    <div className={`relative -mx-[0.75em] -my-[0.2em] mix-blend-multiply dark:mix-blend-screen ${className}`}>
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 size-full" />
       <div
         ref={textRef}
-        className={`relative bg-white text-black mix-blend-screen dark:bg-black dark:text-white dark:mix-blend-multiply ${className}`}>
+        className="relative bg-white px-[0.75em] py-[0.2em] text-black mix-blend-screen dark:bg-black dark:text-white dark:mix-blend-multiply">
         {children}
       </div>
     </div>

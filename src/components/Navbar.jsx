@@ -117,14 +117,14 @@ export default function Navbar() {
         </div>
         <ul className="hidden items-center gap-8 md:flex">
           <li>
-            <a href="#top" className="flex flex-col items-center gap-1 text-caption text-accent">
-              Home
-              <span className="h-half w-[14px] rounded-full bg-accent"></span>
+            <a href="#projects" className="flex flex-col items-center gap-1 text-caption text-foreground">
+              Projects
+              <span className="h-half w-[14px]"></span>
             </a>
           </li>
           <li>
-            <a href="#projects" className="flex flex-col items-center gap-1 text-caption text-foreground">
-              Projects
+            <a href="#about" className="flex flex-col items-center gap-1 text-caption text-foreground">
+              About
               <span className="h-half w-[14px]"></span>
             </a>
           </li>
@@ -137,8 +137,8 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="#about" className="flex flex-col items-center gap-1 text-caption text-foreground">
-              About
+            <a href="#skills" className="flex flex-col items-center gap-1 text-caption text-foreground">
+              Skills
               <span className="h-half w-[14px]"></span>
             </a>
           </li>
@@ -207,6 +207,11 @@ export default function Navbar() {
             <li>
               <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-foreground">
                 About
+              </a>
+            </li>
+            <li>
+              <a href="#skills" onClick={() => setIsMenuOpen(false)} className="text-foreground">
+                Skills
               </a>
             </li>
             <li>

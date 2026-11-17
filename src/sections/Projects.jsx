@@ -1,17 +1,25 @@
 import { useState } from "react";
 import CaseStudy from "../components/CaseStudy";
 import { projects } from "../data";
+import FlowText from "../components/FlowText";
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
 
   return (
-    <section id="projects" className="flex flex-col gap-8 px-6 py-16 md:gap-12 md:px-8 md:py-0">
-      <div className="py-8 text-foreground md:p-32">
-        <div className="mx-auto w-fit">
-          <p className="text-body-lg md:text-intro">{"{ ...latest }"}</p>
-          <h2 className="text-center text-heading-2xl md:text-display">PROJECTS</h2>
+    <section
+      id="projects"
+      aria-labelledby="projects-title"
+      className="flex flex-col gap-8 px-6 py-16 md:gap-12 md:px-8 md:py-0">
+      <div className="py-8 md:p-32">
+        <div className="mx-auto w-full md:w-fit">
+          <p className="text-body-lg text-foreground md:text-intro">{"{ ...latest }"}</p>
+          <FlowText className="text-heading-2xl md:text-display">
+            <h2 id="projects-title" className="text-center">
+              PROJECTS
+            </h2>
+          </FlowText>
         </div>
       </div>
       <ul className="mx-auto grid w-full max-w-case-study grid-cols-1 gap-4 md:grid-cols-12 md:gap-8">
