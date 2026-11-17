@@ -1,6 +1,7 @@
 # Task: Body texture shader (ambient dither background)
 
-> **Status (2026-11-17): built** in `src/components/BodyTexture.jsx`, mounted once in `App.jsx`.
+> **Status (2026-11-17): built.** The WebGL engine is `src/lib/bodyTexture.js` (`createBodyTexture`), used by
+> `src/components/BodyTexture.jsx` (mounted once in `App.jsx`) and by the 404 page (`src/notFound.js`).
 > Decisions made while building, which override the original task below:
 > - **Colors:** two colors from tokens, like incredibles.dev, instead of the Figma 3-stop gradient + canvas opacity.
 >   Each "on" dot is the foreground token (read from `body`'s computed color) at `opacityLight` 0.05 / `opacityDark` 0.10,

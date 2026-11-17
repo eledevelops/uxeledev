@@ -25,6 +25,10 @@
     </script>
   </head>
   <body>
+    <!-- Ambient dot texture behind the page (same as the homepage, see src/lib/bodyTexture.js) -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <canvas id="body-texture" class="[image-rendering:pixelated]"></canvas>
+    </div>
     <main class="flex min-h-svh flex-col items-center justify-center gap-8 px-6 py-16 text-center">
       <div class="w-full md:w-fit">
         <p class="text-left text-body-lg text-foreground md:text-intro">{ 404 }</p>
@@ -40,7 +44,13 @@
       <p class="max-w-modal text-body text-muted-foreground">
         This page doesn't exist. The water was shallower than it looked.
       </p>
-      <a href="/" class="rounded-lg bg-linear-to-r from-coral-300 to-coral-600 px-4 py-3 text-body-bold text-white">
+      <!-- Same look as components/Button.jsx (hover: a lighter gradient fades in, plus a soft shadow) -->
+      <a
+        href="/"
+        class="group relative isolate overflow-hidden rounded-lg bg-linear-to-r from-coral-300 from-38% to-coral-600 to-94% px-4 py-3 text-body-bold text-white transition-shadow duration-base ease-out hover:shadow-button focus-visible:shadow-button">
+        <span
+          aria-hidden="true"
+          class="absolute inset-0 -z-10 bg-linear-to-r from-coral-300 via-coral-200 to-coral-600 opacity-0 transition-opacity duration-base ease-out group-hover:opacity-100 group-focus-visible:opacity-100"></span>
         Back home
       </a>
     </main>

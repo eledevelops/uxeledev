@@ -4,6 +4,7 @@ import Icon from "../components/Icon";
 import linkedin from "../assets/icons/linkedin.svg";
 import mail from "../assets/icons/mail.svg";
 import ContactModal from "../components/ContactModal";
+import Button from "../components/Button";
 
 export default function Contact() {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -16,12 +17,10 @@ export default function Contact() {
       <p className="text-body text-muted-foreground">
         Open to front-end and full-stack roles, freelance projects, and interesting collaborations.
       </p>
-      <button
-        type="button"
-        onClick={() => setIsContactOpen(true)}
-        className="self-start rounded-lg bg-linear-to-r from-coral-300 to-coral-600 px-4 py-3 text-body-bold text-white">
+      <Button onClick={() => setIsContactOpen(true)} className="self-start">
         Message Me
-      </button>
+      </Button>
+
       <hr className="border-border" />
       <div className="flex flex-col gap-5 md:flex-row md:items-center">
         <div className="flex items-center gap-5">

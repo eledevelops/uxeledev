@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 import Field from "./Field";
+import Button from "./Button";
 import close from "../assets/icons/close.svg";
 
 const TURNSTILE_SITE_KEY = import.meta.env.DEV ? "1x00000000000000000000AA" : "0x4AAAAAAF_-1Pjx564p87xP";
@@ -250,12 +251,9 @@ export default function ContactModal({ isOpen, onClose }) {
             </p>
           )}
 
-          <button
-            type="submit"
-            disabled={status === "sending"}
-            className="rounded-lg bg-linear-to-r from-coral-300 to-coral-600 px-4 py-3 text-body-bold text-white disabled:cursor-not-allowed disabled:opacity-50">
+          <Button type="submit" disabled={status === "sending"}>
             {status === "sending" ? "Sending…" : "Send Message"}
-          </button>
+          </Button>
         </form>
         {isSent && (
           <button

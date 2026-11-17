@@ -111,6 +111,8 @@
   --blur-glass: 4px;
   --blur-card: 8px;
   --shadow-card: 0 8px 24px -4px #00000014; /* Figma shadow/card: skills fan cards, Global Teams */
+  --shadow-button: 0 2px 4px -2px #0000000f, 0 4px 8px -2px #0000001a; /* Figma Button / Hover */
+
   --text-shadow-aside: 0 2px 6px var(--background-color-glass), 0 0 40px var(--background-color-glass);
 
   /* ── Layout (Figma "Guidelines") ─────────────────────────
@@ -297,6 +299,11 @@
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
     -webkit-font-smoothing: antialiased;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 
   :focus-visible {
