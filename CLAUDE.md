@@ -47,3 +47,4 @@ Case studies open as **modals** (not pages); one template for all 5 (Siraya, CDN
 ## Specs to read first
 
 - **Hero scroll video:** read `docs/hero-scroll-video.md` before touching the hero. The working demo is in `reference/night-scroll-demo/` (run it with a local server, not by double-clicking).
+- **Body texture (dot background):** `docs/body-texture-shader.md`, built in `src/components/BodyTexture.jsx`.

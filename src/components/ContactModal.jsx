@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
+import Field from "./Field";
 import close from "../assets/icons/close.svg";
 
 const TURNSTILE_SITE_KEY = import.meta.env.DEV ? "1x00000000000000000000AA" : "0x4AAAAAAF_-1Pjx564p87xP";
@@ -162,73 +163,41 @@ export default function ContactModal({ isOpen, onClose }) {
           </button>
         </div>
         <form onSubmit={handleSubmit} noValidate hidden={isSent} className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="contact-name" className="text-body">
-              Name
-            </label>
-            <input
-              id="contact-name"
-              name="name"
-              type="text"
-              autoComplete="name"
-              placeholder="Your name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              aria-invalid={errors.name ? true : undefined}
-              aria-describedby={errors.name ? "contact-name-error" : undefined}
-              className={`rounded-lg border bg-background px-4 py-3 text-body text-foreground transition-colors duration-base ease-out placeholder:text-muted-foreground focus:border-accent focus:outline-none ${errors.name ? "border-error" : "border-border"}`}
-            />
-            {errors.name && (
-              <p id="contact-name-error" className="text-caption text-error">
-                {errors.name}
-              </p>
-            )}
-          </div>
+          <Field
+            id="contact-name"
+            label="Name"
+            error={errors.name}
+            name="name"
+            type="text"
+            autoComplete="name"
+            placeholder="Your name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="contact-email" className="text-body">
-              Email
-            </label>
-            <input
-              id="contact-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder="you@company.com"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              aria-invalid={errors.email ? true : undefined}
-              aria-describedby={errors.email ? "contact-email-error" : undefined}
-              className={`rounded-lg border bg-background px-4 py-3 text-body text-foreground transition-colors duration-base ease-out placeholder:text-muted-foreground focus:border-accent focus:outline-none ${errors.email ? "border-error" : "border-border"}`}
-            />
-            {errors.email && (
-              <p id="contact-email-error" className="text-caption text-error">
-                {errors.email}
-              </p>
-            )}
-          </div>
+          <Field
+            id="contact-email"
+            label="Email"
+            error={errors.email}
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@company.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="contact-message" className="text-body">
-              Message
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={5}
-              placeholder="Tell me about your project..."
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              aria-invalid={errors.message ? true : undefined}
-              aria-describedby={errors.message ? "contact-message-error" : undefined}
-              className={`resize-none rounded-lg border bg-background px-4 py-3 text-body text-foreground transition-colors duration-base ease-out placeholder:text-muted-foreground focus:border-accent focus:outline-none ${errors.message ? "border-error" : "border-border"}`}
-            />
-            {errors.message && (
-              <p id="contact-message-error" className="text-caption text-error">
-                {errors.message}
-              </p>
-            )}
-          </div>
+          <Field
+            id="contact-message"
+            label="Message"
+            error={errors.message}
+            multiline
+            name="message"
+            rows={5}
+            placeholder="Tell me about your project..."
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+          />
 
           <div ref={turnstileRef} />
 

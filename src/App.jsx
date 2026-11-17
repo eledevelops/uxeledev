@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import BodyTexture from "./components/BodyTexture";
 import HeroScrollVideo from "./components/HeroScrollVideo";
 import Hero from "./sections/Hero";
 import Intro from "./sections/Intro";
@@ -27,6 +28,8 @@ function App() {
 
   return (
     <>
+      {/* Ambient dot texture behind the body sections (the hero and footer cover it) */}
+      <BodyTexture />
       <Navbar />
       <main id="top" className="overflow-x-clip">
         {showVideo ? <HeroScrollVideo onFail={setHeroFailed} /> : <Hero />}
