@@ -23,16 +23,26 @@ Ele is learning React by building this site himself, one phase at a time.
 - Animation: **GSAP + ScrollTrigger only.** Add another library only if an idea truly needs it.
 - Reduced motion: when `prefers-reduced-motion: reduce`, nothing blurs, zooms, slides or scrubs — content shows in its final state. Wrap GSAP in `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)`.
 - Hosting: Cloudflare Workers static assets (`wrangler.jsonc`, serves `dist/`). Pushing to `main` on GitHub (eledevelops/uxeledev) deploys.
-- Font: Inter Tight (Google Fonts, loaded in `index.html`).
+- Font: Inter Tight, self-hosted (`@fontsource-variable/inter-tight`, imported in `src/index.css`; `--font-sans` is "Inter Tight Variable"; preloaded in `index.html` and `404.html`).
+- Prerendered: `npm run build` = `vite build` + `vite build -c vite.prerender.config.js` (Node build of `src/entry-server.jsx` into `dist-ssr/`) + `node scripts/prerender.js` (puts the HTML into `dist/client/index.html`). `src/main.jsx` hydrates it (`createRoot` in dev).
 
 ## Structure
 
-- `src/components/` — reusable pieces (Navbar, Icon, …)
-- `src/sections/` — homepage sections (Hero, Intro, Stats, Projects, Skills, About, Contact)
-- `src/data/` — content as data (e.g. `projects.js` for the 5 case studies)
-- `src/assets/icons/` — SVG icons
-- `public/` — files served as-is (favicon; later `public/hero/` for the scroll video frames)
-- `docs/` — specs. `reference/` — local-only demos (gitignored)
+- `src/components/` — reusable pieces (Navbar, Icon, Button, Field, CaseStudy, ContactModal, FlowText, GalleryVideo, BodyTexture…)
+- `src/sections/` — homepage sections (Hero, Intro, Stats, Projects, About, Skills, Contact; `Quote.jsx` is kept but not rendered)
+- `src/data/` — content as data: `projects/<id>.jsx` per case study (collected in `data/index.js`), `skills.js`
+- `src/lib/` — plain-JS engines and helpers (heroScene, flowGradient, bodyTexture WebGL; caseStudyImages, caseStudyVideos)
+- `src/hooks/` — custom hooks (useAutoplay, usePrefersReducedMotion, useSaveData)
+- `src/assets/` — icons, images, case study videos. `public/` — files served as-is (favicon, `hero/` frames, llms.txt, robots, sitemap, `_headers`)
+- `worker/` — contact form Worker. `scripts/` — build scripts (prerender). `docs/` — specs. `reference/` — local-only demos and tools (gitignored)
+
+## Rules learned while building
+
+- **Rendering must not touch the browser** (the page is prerendered in Node). Read `window`/`document`/`navigator`/`localStorage` only inside effects or event handlers, or through `useSyncExternalStore` with a `getServerSnapshot` (see `usePrefersReducedMotion`, `useSaveData`, the Navbar theme). Otherwise `npm run build` crashes or hydration mismatches.
+- **Images:** `import photo from "./photo.webp?responsive"` gives `{ sources, img }` for `<img srcSet>` (recipe in `vite.config.js` → `imageDirectives`, shared with the prerender build). Case study gallery `sizes` come from `tileSizes()`. Phone-only crops use `<picture>` + `?w=…&h=…&fit=cover`.
+- **Case study videos:** `caseStudyVideo("project/name", { loop })` finds `.webm`/`.mp4`/`-poster.webp` in `src/assets/videos/case-studies/`; the poster is the last frame (reduced motion shows it).
+- **Hover-only effects:** use the `can-hover:` / `touch:` variants (input type), not screen widths. Tailwind v4 resets buttons to the arrow cursor; `theme.css` brings back `cursor: pointer`.
+- **Icons with two colors** (e.g. `field-valid.svg`) use `<img>`; `Icon` masks to one color. To hide an `Icon`, use a variant (`dark:hidden`, `not-dark:hidden`), since `Icon` always sets `inline-block`.
 
 ## Design
 
@@ -42,7 +52,9 @@ Case studies open as **modals** (not pages); one template for all 5 (Siraya, CDN
 
 ## Build plan (phases)
 
-0 Setup + deploy ✓ · 1 Shell: navbar ✓, theme toggle ✓, footer · 2 Static sections (Hero as a static image, Intro, Stats, Quote, About) · 3 Projects section · 4 Case study modal · 5 Contact form · 6 Hero scroll video · 7 Skills card fan · 8 Launch polish.
+0 Setup + deploy ✓ · 1 Shell ✓ · 2 Static sections ✓ · 3 Projects ✓ · 4 Case study modal ✓ · 5 Contact form ✓ · 6 Hero scroll video ✓ · 7 Skills card fan ✓ · 8 Launch polish ✓ (SEO + JSON-LD + llms.txt, 404, contact hardening, Lighthouse 99/100/100/100 mobile, responsive images, bento videos, self-hosted font, prerendering).
+
+Decided: hero frames stay on Workers static assets, not R2 (see `docs/hero-scroll-video.md`).
 
 ## Specs to read first
 
