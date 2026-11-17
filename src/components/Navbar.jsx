@@ -143,7 +143,7 @@ export default function Navbar() {
         <a
           href={`#${link.id}`}
           aria-current={isActive ? "true" : undefined}
-          className={`flex flex-col items-center gap-1 text-caption transition-colors duration-base ${isActive ? "text-accent" : "text-foreground"}`}>
+          className={`flex flex-col items-center gap-1 text-body-bold transition-colors duration-base ${isActive ? "text-accent" : "text-foreground"}`}>
           {link.label}
           <span className="h-half w-[14px]"></span>
         </a>

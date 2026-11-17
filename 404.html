@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page not found — Eleazar Madera</title>
     <meta name="robots" content="noindex" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Inter Tight is self-hosted (@fontsource-variable/inter-tight, imported in src/index.css).
+         Preload the Latin file so it downloads in parallel with the CSS; Vite rewrites this path
+         to the hashed file in /assets at build time (the same file the CSS uses). -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet" />
+      rel="preload"
+      href="/node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin />
     <!-- The site's Tailwind CSS and design tokens (Vite builds this page too, see vite.config.js) -->
     <link rel="stylesheet" href="/src/index.css" />
 

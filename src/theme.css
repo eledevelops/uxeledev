@@ -22,7 +22,7 @@
   --*: initial;
 
   /* ── Fonts ─────────────────────────────────────────────── */
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Tight Variable", ui-sans-serif, system-ui, sans-serif; /* self-hosted, see src/index.css */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
