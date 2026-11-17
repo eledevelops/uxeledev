@@ -1,9 +1,9 @@
-import cdnetworksImage from "../../assets/images/projects/cdnetworks.webp?w=800;1600;2400&withoutEnlargement&as=picture";
+import cdnetworksImage from "../../assets/images/projects/cdnetworks.webp?responsive";
 
-import cdnetworksHomepageDesktop from "../../assets/images/case-studies/cdnetworks/homepage-desktop.webp?w=800;1600;2400&withoutEnlargement&as=picture";
-import cdnetworksHomepageMobile from "../../assets/images/case-studies/cdnetworks/homepage-mobile.webp?w=800;1600;2400&withoutEnlargement&as=picture";
-import cdnetworksBrochure01 from "../../assets/images/case-studies/cdnetworks/brochure-01.webp?w=800;1600;2400&withoutEnlargement&as=picture";
-import cdnetworksBrochure02 from "../../assets/images/case-studies/cdnetworks/brochure-02.webp?w=800;1600;2400&withoutEnlargement&as=picture";
+import cdnetworksHomepageDesktop from "../../assets/images/case-studies/cdnetworks/homepage-desktop.webp?responsive";
+import cdnetworksHomepageMobile from "../../assets/images/case-studies/cdnetworks/homepage-mobile.webp?responsive";
+import cdnetworksBrochure01 from "../../assets/images/case-studies/cdnetworks/brochure-01.webp?responsive";
+import cdnetworksBrochure02 from "../../assets/images/case-studies/cdnetworks/brochure-02.webp?responsive";
 import cdnetworksBackgroundWebm from "../../assets/videos/case-studies/cdnetworks/background.webm";
 import cdnetworksBackgroundMp4 from "../../assets/videos/case-studies/cdnetworks/background.mp4";
 import cdnetworksBackgroundPoster from "../../assets/videos/case-studies/cdnetworks/poster.webp";
