@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
+import useSaveData from "./hooks/useSaveData";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BodyTexture from "./components/BodyTexture";
@@ -17,7 +18,7 @@ import Contact from "./sections/Contact";
 function App() {
   const reduceMotion = usePrefersReducedMotion();
 
-  const saveData = navigator.connection?.saveData === true;
+  const saveData = useSaveData();
 
   const [heroFailed, setHeroFailed] = useState(false);
   const showVideo = !reduceMotion && !saveData && !heroFailed;

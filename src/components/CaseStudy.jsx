@@ -3,9 +3,10 @@ import Icon from "./Icon";
 import close from "../assets/icons/close.svg";
 import { tileSizes } from "../lib/caseStudyImages";
 import GalleryVideo from "./GalleryVideo";
+import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 
 export default function CaseStudy({ project, isOpen, onClose }) {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const dialogRef = useRef(null);
 

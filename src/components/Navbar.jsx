@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Icon from "./Icon";
 import logo from "../assets/icons/logo.svg";
 import moon from "../assets/icons/moon.svg";
@@ -19,6 +19,16 @@ const sectionLinks = [
   { id: "skills", label: "Skills" },
   { id: "contact", label: "Contact" },
 ];
+
+// The theme lives on <html class="dark"> (set before paint by the script in index.html).
+// Read it as an external store, so prerendering (no document) and hydration agree.
+function subscribeToTheme(onChange) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  return () => observer.disconnect();
+}
+const getIsDark = () => document.documentElement.classList.contains("dark");
+const getIsDarkOnServer = () => false;
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("top");
@@ -75,17 +85,13 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", placeIndicator);
   }, [activeSection]);
 
-  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"));
+  const isDark = useSyncExternalStore(subscribeToTheme, getIsDark, getIsDarkOnServer);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const overlayRef = useRef(null);
   const navLinksRef = useRef(null);
   const indicatorRef = useRef(null);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -132,7 +138,8 @@ export default function Navbar() {
 
   function toggleTheme() {
     const next = !isDark;
-    setIsDark(next);
+    // The class is the source of truth: subscribeToTheme sees the change and updates isDark
+    document.documentElement.classList.toggle("dark", next);
     localStorage.setItem("theme", next ? "dark" : "light");
   }
 
@@ -225,7 +232,8 @@ export default function Navbar() {
             onClick={toggleTheme}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
             className="flex size-8 items-center justify-center rounded-full text-foreground transition-colors hover:text-accent">
-            <Icon src={isDark ? sun : moon} className=" size-5" />
+            <Icon src={moon} className="size-5 dark:hidden" />
+            <Icon src={sun} className="size-5 not-dark:hidden" />
           </button>
         </div>
         <button
@@ -332,7 +340,8 @@ export default function Navbar() {
                 onClick={toggleTheme}
                 aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                 className="flex size-8 items-center justify-center rounded-full text-foreground transition-colors hover:text-accent">
-                <Icon src={isDark ? sun : moon} className=" size-5" />
+                <Icon src={moon} className="size-5 dark:hidden" />
+                <Icon src={sun} className="size-5 not-dark:hidden" />
               </button>
             </div>
           </div>
