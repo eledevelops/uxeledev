@@ -1,9 +1,9 @@
 import deltabaseImage from "../../assets/images/projects/deltabase.webp?responsive";
 
-import deltabaseHomepageDesktop from "../../assets/images/case-studies/deltabase/homepage-desktop.webp?responsive";
 import deltabaseBrandGuidelines from "../../assets/images/case-studies/deltabase/brand-guidelines.webp?responsive";
 import deltabaseHeader from "../../assets/images/case-studies/deltabase/header.webp";
 import deltabaseAShape from "../../assets/images/case-studies/deltabase/a-shape.webp";
+import { caseStudyVideo } from "../../lib/caseStudyVideos";
 
 const deltabase = {
   id: "deltabase",
@@ -60,7 +60,7 @@ const deltabase = {
     gallery: [
       {
         id: "homepage-desktop",
-        image: deltabaseHomepageDesktop,
+        video: caseStudyVideo("deltabase/homepage", { loop: true }),
         alt: "Deltabase homepage on desktop",
         className: "col-span-2 lg:col-span-8 lg:h-[440px]",
         imageClass: "size-full object-cover object-top",

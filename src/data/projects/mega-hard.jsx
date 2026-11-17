@@ -1,10 +1,10 @@
 import megaHardImage from "../../assets/images/projects/mega-hard.webp?responsive";
 import megaHardHomepageDesktop from "../../assets/images/case-studies/mega-hard/homepage-desktop.webp?responsive";
 import megaHardEventBooth from "../../assets/images/case-studies/mega-hard/event-booth.webp?responsive";
-import megaHardBrochure from "../../assets/images/case-studies/mega-hard/brochure.webp?responsive";
 import megaHardBackgroundWebm from "../../assets/videos/case-studies/mega-hard/background.webm";
 import megaHardBackgroundMp4 from "../../assets/videos/case-studies/mega-hard/background.mp4";
 import megaHardBackgroundPoster from "../../assets/videos/case-studies/mega-hard/poster.webp";
+import { caseStudyVideo } from "../../lib/caseStudyVideos";
 
 const megaHard = {
   id: "mega-hard",
@@ -82,7 +82,7 @@ const megaHard = {
       },
       {
         id: "brochure",
-        image: megaHardBrochure,
+        video: caseStudyVideo("mega-hard/brochure", { loop: true }),
         alt: "Mega Hard brochure: Build AI Infrastructure for Web3 & Fintech",
         className: "col-span-2 lg:col-span-8 lg:h-[406px]",
         imageClass: "size-full object-cover object-top",
@@ -92,7 +92,7 @@ const megaHard = {
       video: megaHardBackgroundWebm,
       videoMp4: megaHardBackgroundMp4,
       poster: megaHardBackgroundPoster,
-      className: "opacity-12",
+      className: "opacity-60",
     },
   },
 };

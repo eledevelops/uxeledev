@@ -1,12 +1,12 @@
 import cdnetworksImage from "../../assets/images/projects/cdnetworks.webp?responsive";
 
-import cdnetworksHomepageDesktop from "../../assets/images/case-studies/cdnetworks/homepage-desktop.webp?responsive";
 import cdnetworksHomepageMobile from "../../assets/images/case-studies/cdnetworks/homepage-mobile.webp?responsive";
 import cdnetworksBrochure01 from "../../assets/images/case-studies/cdnetworks/brochure-01.webp?responsive";
 import cdnetworksBrochure02 from "../../assets/images/case-studies/cdnetworks/brochure-02.webp?responsive";
 import cdnetworksBackgroundWebm from "../../assets/videos/case-studies/cdnetworks/background.webm";
 import cdnetworksBackgroundMp4 from "../../assets/videos/case-studies/cdnetworks/background.mp4";
 import cdnetworksBackgroundPoster from "../../assets/videos/case-studies/cdnetworks/poster.webp";
+import { caseStudyVideo } from "../../lib/caseStudyVideos";
 
 const cdnetworks = {
   id: "cdnetworks",
@@ -64,7 +64,7 @@ const cdnetworks = {
     gallery: [
       {
         id: "homepage-desktop",
-        image: cdnetworksHomepageDesktop,
+        video: caseStudyVideo("cdnetworks/homepage", { loop: false }),
         alt: "CDNetworks homepage on desktop",
         className: "col-span-2 lg:col-span-9 lg:h-[440px]",
         imageClass: "size-full object-cover object-top",
@@ -99,7 +99,7 @@ const cdnetworks = {
       video: cdnetworksBackgroundWebm,
       videoMp4: cdnetworksBackgroundMp4,
       poster: cdnetworksBackgroundPoster,
-      className: "opacity-30",
+      className: "opacity-60",
     },
   },
 };

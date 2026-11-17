@@ -9,7 +9,8 @@ export function tileSizes(className) {
 // Projects already preloaded (once is enough: after that the files are in the browser cache)
 const preloaded = new Set();
 
-// Starts downloading what a case study shows first: its background and first gallery image.
+// Starts downloading what a case study shows first: its background and first gallery image
+// (or, if the first tile is a video, that video's poster).
 // Called when a project card is hovered or focused, so the modal opens with them ready.
 export function preloadCaseStudy(project) {
   if (preloaded.has(project.id) || navigator.connection?.saveData) return;
@@ -20,8 +21,10 @@ export function preloadCaseStudy(project) {
     if (url) new Image().src = url;
   }
 
-  const first = gallery.find((tile) => tile.image);
-  if (first) {
+  const first = gallery.find((tile) => tile.image || tile.video);
+  if (first?.video) {
+    new Image().src = first.video.poster;
+  } else if (first) {
     const image = new Image();
     image.sizes = tileSizes(first.className);
     image.srcset = first.image.sources.webp ?? "";

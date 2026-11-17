@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import Icon from "./Icon";
 import close from "../assets/icons/close.svg";
 import { tileSizes } from "../lib/caseStudyImages";
+import GalleryVideo from "./GalleryVideo";
 
 export default function CaseStudy({ project, isOpen, onClose }) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -29,8 +30,18 @@ export default function CaseStudy({ project, isOpen, onClose }) {
       ref={dialogRef}
       onClose={onClose}
       onClick={handleBackdropClick}
-      className="m-auto h-full max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0
+      className="m-auto h-full max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0 border-2 border-border
 ">
+      {/* Close button: sticks to the top-right corner while the case study scrolls */}
+      <div className="sticky top-0 z-20 flex h-0 justify-end">
+        <button
+          type="button"
+          onClick={() => dialogRef.current.close()}
+          aria-label="Close case study"
+          className="mt-4 mr-4 flex size-8 shrink-0 items-center justify-center rounded-full text-foreground transition-colors duration-base ease-out hover:text-accent md:mt-6 md:mr-6">
+          <Icon src={close} className="size-8" />
+        </button>
+      </div>
       {project && (
         <div className="relative flex flex-col gap-8 px-6 py-12 md:gap-12 md:p-16">
           <div
@@ -68,13 +79,6 @@ export default function CaseStudy({ project, isOpen, onClose }) {
             <h2 id="case-study-title" className="text-heading-2xl md:text-display">
               {project.caseStudy.title}
             </h2>
-            <button
-              type="button"
-              onClick={() => dialogRef.current.close()}
-              aria-label="Close case study"
-              className="flex size-8 shrink-0 items-center justify-center rounded-full text-foreground transition-colors duration-base ease-out hover:text-accent md:mt-1 md:mr-1">
-              <Icon src={close} className="size-8" />
-            </button>
           </div>
           <p className="text-body-lg md:text-intro">{project.caseStudy.intro}</p>
           <div className="flex flex-col gap-3 md:gap-4">
@@ -152,16 +156,20 @@ export default function CaseStudy({ project, isOpen, onClose }) {
                 <li
                   key={tile.id}
                   className={`overflow-hidden rounded-lg border border-border bg-muted ${tile.className}`}>
-                  <img
-                    src={tile.image.img.src}
-                    srcSet={tile.image.sources.webp}
-                    sizes={tileSizes(tile.className)}
-                    width={tile.image.img.w}
-                    height={tile.image.img.h}
-                    alt={tile.alt}
-                    loading="lazy"
-                    className={tile.imageClass}
-                  />
+                  {tile.video ? (
+                    <GalleryVideo video={tile.video} label={tile.alt} className={tile.imageClass} />
+                  ) : (
+                    <img
+                      src={tile.image.img.src}
+                      srcSet={tile.image.sources.webp}
+                      sizes={tileSizes(tile.className)}
+                      width={tile.image.img.w}
+                      height={tile.image.img.h}
+                      alt={tile.alt}
+                      loading="lazy"
+                      className={tile.imageClass}
+                    />
+                  )}
                 </li>
               ),
             )}

@@ -68,7 +68,7 @@ const modelsApi = {
       video: sirayaBackgroundWebm,
       videoMp4: sirayaBackgroundMp4,
       poster: sirayaBackgroundPoster,
-      className: "opacity-20",
+      className: "opacity-60",
     },
   },
 };

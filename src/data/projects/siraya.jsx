@@ -1,15 +1,12 @@
 import sirayaImage from "../../assets/images/projects/siraya.webp?responsive";
-import sirayaHomepageDesktop from "../../assets/images/case-studies/siraya/homepage-desktop.webp?responsive";
 import sirayaHomepageMobile from "../../assets/images/case-studies/siraya/homepage-mobile.webp?responsive";
 import sirayaRobot from "../../assets/images/case-studies/siraya/robot.webp?responsive";
 import sirayaPhoneGlobalReach from "../../assets/images/case-studies/siraya/phone-global-reach.webp?responsive";
-import sirayaBrochure01 from "../../assets/images/case-studies/siraya/brochure-01.webp?responsive";
-import sirayaBrochure02 from "../../assets/images/case-studies/siraya/brochure-02.webp?responsive";
-import sirayaBrochure03 from "../../assets/images/case-studies/siraya/brochure-03.webp?responsive";
 import sirayaBrochure04 from "../../assets/images/case-studies/siraya/brochure-04.webp?responsive";
 import sirayaBackgroundWebm from "../../assets/videos/case-studies/siraya/background.webm";
 import sirayaBackgroundMp4 from "../../assets/videos/case-studies/siraya/background.mp4";
 import sirayaBackgroundPoster from "../../assets/videos/case-studies/siraya/poster.webp";
+import { caseStudyVideo } from "../../lib/caseStudyVideos";
 
 const siraya = {
   id: "siraya",
@@ -67,7 +64,7 @@ const siraya = {
     gallery: [
       {
         id: "homepage-desktop",
-        image: sirayaHomepageDesktop,
+        video: caseStudyVideo("siraya/homepage", { loop: true }),
         alt: "Siraya homepage on desktop",
         className: "col-span-2 lg:col-span-9 lg:h-[440px]",
         imageClass: "size-full object-cover object-top",
@@ -99,21 +96,21 @@ const siraya = {
       },
       {
         id: "brochure-01",
-        image: sirayaBrochure01,
+        video: caseStudyVideo("siraya/brochure-01", { loop: true }),
         alt: "Siraya brochure: Your Gateway to Global AI & Cloud Infra",
         className: "col-span-1 lg:col-span-3 lg:h-[397px]",
         imageClass: "size-full object-cover object-top",
       },
       {
         id: "brochure-02",
-        image: sirayaBrochure02,
+        video: caseStudyVideo("siraya/brochure-02", { loop: true }),
         alt: "Siraya brochure: Create with AI, Scale with Siraya",
         className: "col-span-1 lg:col-span-3 lg:h-[397px]",
         imageClass: "size-full object-cover object-top",
       },
       {
         id: "brochure-03",
-        image: sirayaBrochure03,
+        video: caseStudyVideo("siraya/brochure-03", { loop: true }),
         alt: "Siraya brochure: Designed to Reduce Your AI Spend",
         className: "col-span-1 lg:col-span-3 lg:h-[397px]",
         imageClass: "size-full object-cover object-top",
@@ -130,7 +127,7 @@ const siraya = {
       video: sirayaBackgroundWebm,
       videoMp4: sirayaBackgroundMp4,
       poster: sirayaBackgroundPoster,
-      className: "opacity-30",
+      className: "opacity-70",
     },
   },
 };
