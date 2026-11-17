@@ -14,6 +14,10 @@
 /* `dark:` variant follows the .dark class on <html> (set by the theme toggle) */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Devices whose main input can hover precisely (mouse, trackpad) vs. touch screens (phones, iPad). Use these instead of screen widths for hover-only effects. */
+@custom-variant can-hover (@media (hover: hover) and (pointer: fine));
+@custom-variant touch (@media not ((hover: hover) and (pointer: fine)));
+
 @theme {
   --*: initial;
 
