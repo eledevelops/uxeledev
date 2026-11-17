@@ -1,14 +1,7 @@
 import { useEffect, useRef } from "react";
 import Icon from "./Icon";
 import close from "../assets/icons/close.svg";
-
-// How wide a gallery tile is on screen, from its grid classes, so the browser can pick an image size.
-// Phones: 2-column grid (col-span-1 = half, col-span-2 = full). From lg: 12 columns, at most 76rem wide.
-function tileSizes(className) {
-  const isHalf = /(^|\s)col-span-1(\s|$)/.test(className);
-  const lgColumns = Number(className.match(/lg:col-span-(\d+)/)?.[1] ?? 12);
-  return `(min-width: 64rem) ${((lgColumns / 12) * 76).toFixed(1)}rem, ${isHalf ? 50 : 100}vw`;
-}
+import { tileSizes } from "../lib/caseStudyImages";
 
 export default function CaseStudy({ project, isOpen, onClose }) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import CaseStudy from "../components/CaseStudy";
 import { projects } from "../data";
 import FlowText from "../components/FlowText";
+import { preloadCaseStudy } from "../lib/caseStudyImages";
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -31,6 +32,8 @@ export default function Projects() {
                 setSelectedProject(project);
                 setIsCaseStudyOpen(true);
               }}
+              onPointerEnter={() => preloadCaseStudy(project)}
+              onFocus={() => preloadCaseStudy(project)}
               className="group relative block h-[240px] w-full overflow-hidden rounded-lg border border-border md:h-[365px]">
               <div className="absolute -inset-4 transition duration-base ease-out max-md:blur-card max-md:brightness-75 md:group-hover:blur-card md:group-hover:brightness-75 md:group-focus-visible:blur-card md:group-focus-visible:brightness-75">
                 <img
