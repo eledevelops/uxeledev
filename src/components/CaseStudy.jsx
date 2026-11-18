@@ -12,8 +12,9 @@ export default function CaseStudy({ project, isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
-      dialogRef.current.scrollTop = 0;
       dialogRef.current.showModal();
+      // Reset the scroll AFTER opening: a closed dialog is display:none, and the browser ignores scrolling on it
+      dialogRef.current.scrollTop = 0;
       // Focus the dialog itself, not the close button, so the X doesn't light up on open
       dialogRef.current.focus();
     } else {
