@@ -69,6 +69,7 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
       const [line1, line2] = [...set1Ref.current.children].map(splitLine);
       const [line3, line4, line5] = [...set2Ref.current.children].map(splitLine);
       gsap.set([line1, line2, line3, line4, line5].flat(), { opacity: 0, filter: "blur(18px)", y: 16 });
+      gsap.set([set1Ref.current, set2Ref.current], { opacity: 1 });
 
       const sharpen = { opacity: 1, filter: "blur(0px)", y: 0, ease: "power2.out", duration: 0.03, stagger: 0.0025 };
       gsap
@@ -135,11 +136,11 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
         />
         <div className="pointer-events-none absolute inset-0 grid place-items-center px-4 text-center text-aside text-foreground text-shadow-aside">
           <p className="sr-only">The water was very very shallow... no miracles here, just dedication and hard work.</p>
-          <div ref={set1Ref} aria-hidden="true" className="col-start-1 row-start-1">
+          <div ref={set1Ref} aria-hidden="true" className="col-start-1 row-start-1 opacity-0">
             <p>The water was</p>
             <p>very very shallow...</p>
           </div>
-          <div ref={set2Ref} aria-hidden="true" className="col-start-1 row-start-1">
+          <div ref={set2Ref} aria-hidden="true" className="col-start-1 row-start-1 opacity-0">
             <p>no miracles here,</p>
             <p>just dedication</p>
             <p>and hard work.</p>
