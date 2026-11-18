@@ -1,3 +1,14 @@
 @import "tailwindcss";
 @import "./theme.css";
 @import "@fontsource-variable/inter-tight/wght.css";
+
+/* Orange dot cursor (CursorDot.jsx): hide the system arrow on mouse devices, except in text
+   fields and while a dialog is open (dialogs sit in the top layer, above the dot). */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor-dot:not(:has(dialog[open])) *:not(input, textarea) {
+    cursor: none;
+  }
+  html:has(dialog[open]) .cursor-dot {
+    display: none;
+  }
+}

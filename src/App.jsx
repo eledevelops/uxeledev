@@ -5,6 +5,7 @@ import useSaveData from "./hooks/useSaveData";
 import useSoftSnap from "./hooks/useSoftSnap";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CursorDot from "./components/CursorDot";
 import BodyTexture from "./components/BodyTexture";
 import HeroScrollVideo from "./components/HeroScrollVideo";
 import Hero from "./sections/Hero";
@@ -44,6 +45,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <CursorDot />
     </>
   );
 }
