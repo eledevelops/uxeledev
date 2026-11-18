@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -23,7 +23,14 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
   const pillRef = useRef(null);
   const pillButtonRef = useRef(null);
 
-  useAutoplay(trackRef, stageRef, { enabled: AUTOPLAY_ENABLED, seconds: AUTOPLAY_SECONDS, onChange: onAutoplayChange });
+  // No video (no WebGL, or WebGL drawn in software): the poster stays as a still, one-screen hero
+  const [isStill, setIsStill] = useState(false);
+
+  useAutoplay(trackRef, stageRef, {
+    enabled: AUTOPLAY_ENABLED && !isStill,
+    seconds: AUTOPLAY_SECONDS,
+    onChange: onAutoplayChange,
+  });
 
   useLayoutEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
@@ -39,7 +46,7 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
     });
 
     if (!scene) {
-      onFail(true);
+      setIsStill(true);
       return;
     }
 
@@ -121,9 +128,21 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
   }, [onFail]);
 
   return (
-    <div ref={trackRef} className="relative h-[500vh]">
-      <div ref={stageRef} className="sticky top-0 h-svh overflow-hidden bg-background">
+    <div ref={trackRef} className={`relative ${isStill ? "h-svh" : "h-[500vh]"}`}>
+      <div ref={stageRef} className="sticky top-0 h-svh overflow-hidden bg-background [container-type:size]">
         <h1 className="sr-only">Eleazar Madera, front-end developer</h1>
+        {/* Poster: the video's first frame as a plain image, in the HTML, so it paints before any
+            JavaScript (and is the page's Largest Contentful Paint). The canvas draws the same frame,
+            cropped the same way (hero-poster in index.css), right on top of it. Phones (portrait)
+            get the narrow set. */}
+        <picture>
+          <source media="(max-aspect-ratio: 9/16)" srcSet="/hero/portrait/poster-light.webp" />
+          <img src="/hero/poster-light.webp" alt="" fetchPriority="high" className="hero-poster dark:hidden" />
+        </picture>
+        <picture>
+          <source media="(max-aspect-ratio: 9/16)" srcSet="/hero/portrait/poster-dark.webp" />
+          <img src="/hero/poster-dark.webp" alt="" fetchPriority="high" className="hero-poster hidden dark:block" />
+        </picture>
         <canvas
           ref={canvasRef}
           role="img"

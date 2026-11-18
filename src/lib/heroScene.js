@@ -15,6 +15,7 @@
  * Returns null if the browser has no WebGL. The hero then keeps its static image.
  */
 import { STAR_CENTER_Y } from "./heroStarCenters";
+import { hasFastWebGL } from "./webglSupport";
 
 export const FRAME_COUNT = 724; // frames per scene (15 s at 48 fps)
 const FILE_COUNT = FRAME_COUNT / 2; // each file holds two frames
@@ -148,6 +149,7 @@ const LOAD_ORDER = buildLoadOrder();
 // ── The scene ──────────────────────────────────────────────────────
 
 export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 1920, onProgress = () => {} }) {
+  if (!hasFastWebGL()) return null; // software-drawn WebGL would freeze the page
   const gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false });
   if (!gl) return null;
 

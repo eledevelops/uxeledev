@@ -12,3 +12,30 @@
     display: none;
   }
 }
+
+/* Hero poster (HeroScrollVideo): the video's first frame as an <img>, cropped exactly like
+   heroScene.js resize() crops the canvas, so the canvas lands on it without a jump.
+   Sizes come from the stage (a size container: 100cqw × 100cqh).
+   --fw = frame width, --fx = where Ele stands (fraction of the frame), --shift = |fx - 0.5|. */
+.hero-poster {
+  --fw: 1920;
+  --fx: 0.488;
+  --shift: 0.012;
+  /* cover the stage, plus up to 10% zoom to make room for centering Ele */
+  --cover-w: max(100cqw, 100cqh * var(--fw) / 1080);
+  --w: max(var(--cover-w), min(100cqw / (1 - 2 * var(--shift)), var(--cover-w) * 1.1));
+  position: absolute;
+  max-width: none;
+  width: var(--w);
+  height: calc(var(--w) * 1080 / var(--fw));
+  left: clamp(100cqw - var(--w), 50cqw - var(--fx) * var(--w), 0px);
+  top: calc((100cqh - var(--w) * 1080 / var(--fw)) / 2);
+}
+/* Phones: the portrait set is the middle 608px of the 1920px frames, so Ele sits at 46.2% of it */
+@media (max-aspect-ratio: 9/16) {
+  .hero-poster {
+    --fw: 608;
+    --fx: 0.4621;
+    --shift: 0.0379;
+  }
+}

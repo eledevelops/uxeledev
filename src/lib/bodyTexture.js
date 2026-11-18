@@ -15,6 +15,7 @@
 //   destroy?.();                                                      // cleanup
 
 import { createFluid } from "./fluid";
+import { hasFastWebGL } from "./webglSupport";
 
 const VERTEX_SHADER = `
 attribute vec2 aPosition;
@@ -185,8 +186,10 @@ export function createBodyTexture(canvas, options = {}) {
 
   // WebGL2 when available (the fluid needs it), otherwise WebGL1 without the fluid
   const contextOptions = { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false };
-  const gl = canvas.getContext("webgl2", contextOptions) || canvas.getContext("webgl", contextOptions);
-  // No WebGL: hide the canvas, the plain page background is the fallback
+  // No WebGL, or WebGL drawn in software (would freeze the page): hide the canvas,
+  // the plain page background is the fallback
+  const gl =
+    hasFastWebGL() && (canvas.getContext("webgl2", contextOptions) || canvas.getContext("webgl", contextOptions));
   if (!gl) {
     canvas.style.display = "none";
     return null;

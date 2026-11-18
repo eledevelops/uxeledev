@@ -17,6 +17,8 @@
  * - 6 coral stops instead of 3, coral-50 removed, harder edges, half speed
  */
 
+import { hasFastWebGL } from "./webglSupport";
+
 // Palette tokens from theme.css, read at runtime so the colors stay in one place.
 const STOP_TOKENS = [
   "--color-coral-600",
@@ -230,6 +232,7 @@ function compileShader(gl, type, source) {
 }
 
 export function createFlowGradient(canvas) {
+  if (!hasFastWebGL()) return null; // software-drawn WebGL would freeze the page
   const gl = canvas.getContext("webgl2", { antialias: false, premultipliedAlpha: false });
   if (!gl) return null;
 
