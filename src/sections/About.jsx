@@ -2,7 +2,7 @@ import FlowText from "../components/FlowText";
 
 export default function About() {
   return (
-    <section id="about" className="mx-auto flex max-w-case-study flex-col gap-10 px-6 py-16 lg:px-24 lg:py-32">
+    <section id="about" className="mx-auto flex min-h-svh max-w-case-study flex-col justify-center gap-10 px-6 py-16 lg:px-24 lg:py-32">
       <FlowText className="text-heading lg:text-heading-xl">
         <p>
           For over a decade, I've worked at the intersection of brand, design, and code — building visual identities,

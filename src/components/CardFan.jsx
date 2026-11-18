@@ -20,7 +20,10 @@ export default function CardFan() {
 
     mm.add(
       {
+        // gsap.matchMedia runs this function only while AT LEAST ONE condition matches,
+        // so phones need their own condition (without it, nothing ran on mobile).
         isDesktop: "(min-width: 48rem)",
+        isMobile: "(max-width: 47.99rem)",
         reduceMotion: "(prefers-reduced-motion: reduce)",
       },
       (context) => {

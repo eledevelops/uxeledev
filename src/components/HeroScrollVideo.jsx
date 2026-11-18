@@ -4,6 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { createHeroScene, FRAME_COUNT } from "../lib/heroScene";
 import useAutoplay from "../hooks/useAutoplay";
+import Icon from "./Icon";
+import play from "../assets/icons/play.svg";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -18,6 +20,8 @@ export default function HeroScrollVideo({ onFail }) {
   const set1Ref = useRef(null);
   const set2Ref = useRef(null);
   const stageRef = useRef(null);
+  const pillRef = useRef(null);
+  const pillButtonRef = useRef(null);
 
   useAutoplay(trackRef, stageRef, { enabled: AUTOPLAY_ENABLED, seconds: AUTOPLAY_SECONDS });
 
@@ -76,7 +80,12 @@ export default function HeroScrollVideo({ onFail }) {
             scrub: 0.6,
           },
         })
-        .to(video, { frame: FRAME_COUNT - 1, ease: "none", duration: 1, onUpdate: () => scene.setFrame(video.frame) }, 0)
+        .to(
+          video,
+          { frame: FRAME_COUNT - 1, ease: "none", duration: 1, onUpdate: () => scene.setFrame(video.frame) },
+          0,
+        )
+        .to(pillRef.current, { autoAlpha: 0, duration: 0.02, ease: "none" }, 0)
         .to(scrimRef.current, { opacity: 1, duration: 0.03 }, 0.56)
         .to(line1, sharpen, 0.575)
         .to(line2, sharpen, 0.6)
@@ -85,6 +94,19 @@ export default function HeroScrollVideo({ onFail }) {
         .to(line4, sharpen, 0.745)
         .to(line5, sharpen, 0.77)
         .set({}, {}, 1);
+
+      // Play cue: enters once (fade in while scaling from 2 to 1), then pulses softly to invite a click.
+      // The pulse is its own repeating timeline (grow a little, settle back, rest 1 s), nested so it
+      // only starts after the entrance has finished.
+      const pill = pillButtonRef.current;
+      const pulse = gsap
+        .timeline({ repeat: -1, repeatDelay: 1 })
+        .to(pill, { scale: 1.06, duration: 0.35, ease: "sine.out" })
+        .to(pill, { scale: 1, duration: 0.5, ease: "sine.inOut" });
+      gsap
+        .timeline({ delay: 0.4 })
+        .fromTo(pill, { autoAlpha: 0, scale: 2 }, { autoAlpha: 1, scale: 1, duration: 0.9, ease: "power3.out" })
+        .add(pulse, "+=0.4");
 
       return () => scene.pause();
     });
@@ -122,6 +144,23 @@ export default function HeroScrollVideo({ onFail }) {
             <p>just dedication</p>
             <p>and hard work.</p>
           </div>
+        </div>
+        {/* Play cue. A click bubbles up to the stage, whose click handler (useAutoplay) starts the video.
+            Two layers, so the two animations never fight over the same opacity: the wrapper fades out
+            as the video starts scrolling (timeline), the button enters once on load (fade + scale 2 → 1).
+            The button starts hidden (invisible opacity-0); GSAP reveals it. */}
+        <div ref={pillRef} className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <button
+            ref={pillButtonRef}
+            type="button"
+            className="invisible flex items-center gap-2 rounded-full whitespace-nowrap border border-border bg-glass px-5 py-3 text-body-bold text-foreground opacity-0 backdrop-blur-glass transition-colors duration-base hover:border-coral-400 hover:bg-coral-400 hover:text-white focus-visible:border-coral-400 focus-visible:bg-coral-400 focus-visible:text-white">
+            <Icon src={play} className="size-5" />
+            Play
+            <span className="font-normal ">
+              <span className="touch:hidden">or Scroll</span>
+              <span className="can-hover:hidden">or swipe up</span>
+            </span>
+          </button>
         </div>
         <div className="absolute inset-x-0 bottom-0 h-half">
           <span ref={barRef} className="block h-full w-0 bg-accent transition-[width,opacity] duration-base ease-out" />

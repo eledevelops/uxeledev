@@ -31,7 +31,7 @@ export default function CaseStudy({ project, isOpen, onClose }) {
       ref={dialogRef}
       onClose={onClose}
       onClick={handleBackdropClick}
-      className="m-auto h-full max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0 border-2 border-border
+      className="m-auto h-full max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0 border-2 border-border shadow-glow
 ">
       {/* Close button: sticks to the top-right corner while the case study scrolls */}
       <div className="sticky top-0 z-20 flex h-0 justify-end">

@@ -18,7 +18,9 @@
 @custom-variant can-hover (@media (hover: hover) and (pointer: fine));
 @custom-variant touch (@media not ((hover: hover) and (pointer: fine)));
 
-@theme {
+/* `static`: output every token as a CSS variable, even ones no class uses, so var(--color-…)
+   works anywhere in CSS and JavaScript (e.g. --texture-ink below). */
+@theme static {
   --*: initial;
 
   /* ── Fonts ─────────────────────────────────────────────── */
@@ -113,9 +115,11 @@
 
   /* ── Effects (Figma blur/glass) ── backdrop-blur-glass */
   --blur-glass: 4px;
+  --blur-glass-nav: 8px;
   --blur-card: 8px;
   --shadow-card: 0 8px 24px -4px #00000014; /* Figma shadow/card: skills fan cards, Global Teams */
   --shadow-button: 0 2px 4px -2px #0000000f, 0 4px 8px -2px #0000001a; /* Figma Button / Hover */
+  --shadow-glow: 0 24px 80px -20px #ff6b3573; /* coral-400 at 45%: soft orange glow under the contact modal */
 
   --text-shadow-aside: 0 2px 6px var(--background-color-glass), 0 0 40px var(--background-color-glass);
 
@@ -255,6 +259,19 @@
   --border-color-info: #2563eb;
 }
 
+/* ── Body texture ink ─────────────────────────────────────
+   The color and strength of the cursor "ink" in the dot texture (src/lib/bodyTexture.js
+   reads them, and again on every theme switch). Point it at any palette variable from @theme above:
+   every token exists as a CSS variable because the block is `@theme static`. */
+:root {
+  --texture-ink: var(--color-coral-200);
+  --texture-ink-strength: 0.2; /* how visible the ink is where it's thickest: 0 = invisible, 1 = solid */
+}
+.dark {
+  --texture-ink: var(--color-coral-200);
+  --texture-ink-strength: 0.2;
+}
+
 /* ── Semantic tokens: Dark ────────────────────────────────
    Same names, new values. Classes don't change; the variables do.
    Status colors have no dark values in Figma yet, so they stay as-is. */
@@ -340,4 +357,31 @@
 }
 @utility duration-slow {
   transition-duration: 400ms;
+}
+
+/* Theme switch (Navbar → toggleTheme → document.startViewTransition).
+   The old page fades out to the NEW theme's background color, then the new page fades in:
+   a dark dip going into dark mode, a light dip going into light mode. */
+::view-transition {
+  background-color: var(--background-color-background);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  animation: theme-fade-out 400ms var(--ease-in-out) both;
+}
+::view-transition-new(root) {
+  animation: theme-fade-in 400ms var(--ease-out) 150ms both;
+}
+@keyframes theme-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
 }

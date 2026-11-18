@@ -9,9 +9,10 @@ import brandIdentity from "../assets/icons/skills/brand-identity.svg";
 import marketingCollateral from "../assets/icons/skills/marketing-collateral.svg";
 import adobe from "../assets/icons/skills/adobe.svg";
 import figma from "../assets/icons/skills/figma.svg";
-import photography from "../assets/icons/skills/photography.svg";
-import performance from "../assets/icons/skills/performance.svg";
-import video from "../assets/icons/skills/video.svg";
+// Animated icons (components instead of image files)
+import LensIcon from "../components/skill-icons/LensIcon";
+import PerformanceIcon from "../components/skill-icons/PerformanceIcon";
+import ClapperIcon from "../components/skill-icons/ClapperIcon";
 
 // The three "What I do" steps in the Skills section (Figma: Skills / What I do).
 export const skillGroups = [
@@ -42,9 +43,9 @@ export const skillGroups = [
     title: "Digital Content",
     text: "Alongside development, I bring a photography and video production background — from board-level corporate photography to video production for live conferences. I understand how visual content should be shaped, compressed, and formatted for the web, which shapes how I approach media on every site I build.",
     icons: [
-      { name: "Photography", src: photography },
-      { name: "Web performance", src: performance },
-      { name: "Video production", src: video },
+      { name: "Photography", Component: LensIcon },
+      { name: "Web performance", Component: PerformanceIcon },
+      { name: "Video production", Component: ClapperIcon },
     ],
   },
 ];

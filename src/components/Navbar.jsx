@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Icon from "./Icon";
+import ThemeToggle from "./ThemeToggle";
 import logo from "../assets/icons/logo.svg";
-import moon from "../assets/icons/moon.svg";
-import sun from "../assets/icons/sun.svg";
 import separator from "../assets/icons/separator.svg";
 import menu from "../assets/icons/menu.svg";
 import close from "../assets/icons/close.svg";
@@ -139,8 +138,18 @@ export default function Navbar() {
   function toggleTheme() {
     const next = !isDark;
     // The class is the source of truth: subscribeToTheme sees the change and updates isDark
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
+    const applyTheme = () => {
+      document.documentElement.classList.toggle("dark", next);
+      localStorage.setItem("theme", next ? "dark" : "light");
+    };
+    // Old browsers or reduced motion: switch instantly. Otherwise the browser fades the whole page
+    // (old page out, a moment of the new background color, new page in; CSS in theme.css).
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!document.startViewTransition || reduceMotion) {
+      applyTheme();
+      return;
+    }
+    document.startViewTransition(applyTheme);
   }
 
   function desktopLink(link) {
@@ -150,7 +159,7 @@ export default function Navbar() {
         <a
           href={`#${link.id}`}
           aria-current={isActive ? "true" : undefined}
-          className={`flex flex-col items-center gap-1 text-body-bold transition-colors duration-base ${isActive ? "text-accent" : "text-foreground"}`}>
+          className={`flex flex-col items-center gap-1 text-body-bold transition-colors duration-base ${isActive ? "text-accent" : "text-foreground hover:text-accent"}`}>
           {link.label}
           <span className="h-half w-[14px]"></span>
         </a>
@@ -162,7 +171,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-4 z-50 px-5">
       <nav
         aria-label="Main"
-        className="mx-auto flex max-w-navbar items-center justify-between rounded-xl border border-border bg-glass px-5 py-4 backdrop-blur-glass md:px-8 md:py-5">
+        className="mx-auto flex max-w-navbar items-center justify-between rounded-xl border border-border bg-glass px-5 py-4 backdrop-blur-glass-nav md:px-8 md:py-5">
         <a href="#top" aria-label="Back to top" className="flex text-foreground md:hidden">
           <Icon src={logo} className="size-8" />
         </a>
@@ -213,7 +222,7 @@ export default function Navbar() {
               <a
                 href="#top"
                 aria-label="Back to top"
-                className="flex text-foreground transition-colors hover:text-accent">
+                className="flex text-foreground transition-colors duration-slow hover:text-accent">
                 <Icon src={logo} className="size-8" />
               </a>
             </li>
@@ -227,14 +236,7 @@ export default function Navbar() {
           />
         </div>
         <div className="hidden flex-1 justify-end md:flex">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="flex size-8 items-center justify-center rounded-full text-foreground transition-colors hover:text-accent">
-            <Icon src={moon} className="size-5 dark:hidden" />
-            <Icon src={sun} className="size-5 not-dark:hidden" />
-          </button>
+          <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
         </div>
         <button
           ref={menuButtonRef}
@@ -277,7 +279,7 @@ export default function Navbar() {
                 href="#top"
                 onClick={() => setIsMenuOpen(false)}
                 aria-current={activeSection === "top" ? "true" : undefined}
-                className={activeSection === "top" ? "text-accent" : "text-foreground"}>
+                className={activeSection === "top" ? "text-accent" : "text-foreground hover:text-accent"}>
                 Home
               </a>
             </li>
@@ -287,7 +289,7 @@ export default function Navbar() {
                   href={`#${link.id}`}
                   onClick={() => setIsMenuOpen(false)}
                   aria-current={activeSection === link.id ? "true" : undefined}
-                  className={activeSection === link.id ? "text-accent" : "text-foreground"}>
+                  className={activeSection === link.id ? "text-accent" : "text-foreground hover:text-accent"}>
                   {link.label}
                 </a>
               </li>
@@ -335,14 +337,7 @@ export default function Navbar() {
                   </a>
                 </li>
               </ul>
-              <button
-                type="button"
-                onClick={toggleTheme}
-                aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                className="flex size-8 items-center justify-center rounded-full text-foreground transition-colors hover:text-accent">
-                <Icon src={moon} className="size-5 dark:hidden" />
-                <Icon src={sun} className="size-5 not-dark:hidden" />
-              </button>
+              <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
             </div>
           </div>
         </div>

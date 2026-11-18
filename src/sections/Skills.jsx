@@ -1,3 +1,6 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FlowText from "../components/FlowText";
 import CardFan from "../components/CardFan";
 import Icon from "../components/Icon";
@@ -10,13 +13,34 @@ import globalTeams from "../assets/images/skills/global-teams.webp";
 import globalTeamsPhone from "../assets/images/skills/global-teams.webp?w=820&h=1261&fit=cover&position=center";
 import eleStanding from "../assets/images/skills/ele-standing.webp";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Skills() {
+  const stepsRef = useRef(null);
+
+  // Each row of icons fades in one by one when it scrolls into view
+  useEffect(() => {
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      stepsRef.current.querySelectorAll("[data-skill-icons]").forEach((row) => {
+        gsap.from(row.children, {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power1.out",
+          stagger: 0.15,
+          scrollTrigger: { trigger: row, start: "top 85%", once: true },
+        });
+      });
+    });
+    return () => mm.revert();
+  }, []);
+
   return (
     <section id="skills" aria-labelledby="skills-title">
       {/* Title */}
       <div className="flex justify-center px-6 pt-16 pb-8 md:p-32">
         <div className="w-full md:w-fit">
-          <p className="text-body-lg text-foreground md:text-intro">{"{ my }"}</p>
+          <p className="text-center text-body-lg text-foreground md:text-left md:text-intro">{"{ my }"}</p>
           <FlowText className="text-heading-2xl md:text-display">
             <h2 id="skills-title" className="text-center">
               SKILLS
@@ -39,15 +63,20 @@ export default function Skills() {
           <div className="w-full lg:sticky lg:top-32 lg:w-2/5 lg:shrink-0 xl:w-card-fan">
             <CardFan />
           </div>
-          <div className="flex flex-1 flex-col gap-12 lg:gap-0">
+          <div ref={stepsRef} className="flex flex-1 flex-col gap-12 lg:gap-0">
             {skillGroups.map((group) => (
               <div key={group.title} className="flex flex-col gap-4 lg:min-h-[37.5rem] lg:justify-center lg:gap-8">
                 <h3 className="text-heading-2xl text-foreground xl:text-hero">{group.title}</h3>
                 <p className="text-body text-foreground lg:text-body-lg">{group.text}</p>
-                <ul className="flex flex-wrap gap-4 lg:gap-8">
+                <ul data-skill-icons className="flex flex-wrap gap-4 lg:gap-8">
                   {group.icons.map((icon) => (
                     <li key={icon.name}>
-                      <img src={icon.src} alt={icon.name} loading="lazy" className="size-16 lg:size-24" />
+                      {/* Animated icons are components; the rest are image files */}
+                      {icon.Component ? (
+                        <icon.Component title={icon.name} className="size-16 lg:size-24" />
+                      ) : (
+                        <img src={icon.src} alt={icon.name} loading="lazy" className="size-16 lg:size-24" />
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -82,7 +111,7 @@ export default function Skills() {
       </div>
 
       {/* Soft Skills */}
-      <div className="mx-auto flex max-w-case-frame flex-col gap-8 px-6 pt-24 pb-16 md:px-16 md:pb-24">
+      <div className="mx-auto flex max-w-case-frame flex-col gap-8 px-6 pt-32 pb-16 md:px-16 md:pb-24">
         <h3 className="text-heading-2xl text-foreground md:text-hero">Soft Skills</h3>
         <div className="flex flex-col items-center gap-10 md:flex-row md:gap-8">
           <ul className="flex w-full flex-col gap-4 md:flex-1 md:gap-6">
@@ -99,7 +128,7 @@ export default function Skills() {
             src={eleStanding}
             alt="Eleazar standing with arms crossed, smiling"
             width="600"
-            height="1114"
+            height="1361"
             loading="lazy"
             className="w-[13.75rem] md:-my-24 md:mr-16 md:w-[18.25rem] md:shrink-0"
           />

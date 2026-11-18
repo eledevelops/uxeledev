@@ -158,7 +158,7 @@ export default function ContactModal({ isOpen, onClose }) {
       ref={dialogRef}
       onClose={onClose}
       onClick={handleBackdropClick}
-      className="m-auto w-[calc(100%-3rem)] max-w-modal rounded-2xl bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0">
+      className="m-auto w-[calc(100%-3rem)] max-w-modal rounded-2xl bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0 border border-border shadow-glow">
       <div className="flex flex-col gap-8 p-6 md:p-8">
         <div className="flex items-start justify-between gap-6">
           <div className="flex flex-col gap-2">

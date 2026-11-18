@@ -15,7 +15,7 @@ export default function Projects() {
       className="flex flex-col gap-8 px-6 py-16 md:gap-12 md:px-8 md:py-0">
       <div className="py-8 md:p-32">
         <div className="mx-auto w-full md:w-fit">
-          <p className="text-body-lg text-foreground md:text-intro">{"{ ...latest }"}</p>
+          <p className="text-center text-body-lg text-foreground md:text-left md:text-intro">{"{ ...latest }"}</p>
           <FlowText className="text-heading-2xl md:text-display">
             <h2 id="projects-title" className="text-center">
               PROJECTS

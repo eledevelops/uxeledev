@@ -14,6 +14,8 @@
 //   const destroy = createBodyTexture(canvas, { opacityDark: 0.08 }); // null if WebGL is unavailable
 //   destroy?.();                                                      // cleanup
 
+import { createFluid } from "./fluid";
+
 const VERTEX_SHADER = `
 attribute vec2 aPosition;
 void main() {
@@ -37,6 +39,10 @@ uniform float uRotationSpeed;
 uniform float uContrast;
 uniform float uMinDensity;
 uniform float uMaxDensity;
+uniform sampler2D uDye;     // fluid ink from fluid.js (red channel), stirred by the cursor
+uniform float uFluid;       // 1 when the fluid is running, 0 otherwise
+uniform float uSpotOpacity; // dot opacity where the ink is thickest
+uniform vec3 uAccent;       // ink dot color (the accent token)
 
 // Value noise: random values on a grid, smoothly blended in between
 float hash(vec2 p) {
@@ -103,11 +109,17 @@ void main() {
   cloud = clamp((cloud - 0.5) * uContrast + 0.5, 0.0, 1.0);
   float density = mix(uMinDensity, uMaxDensity, cloud);
 
+  // Fluid ink: where the cursor stirred the liquid, the dots get denser, coral and more visible
+  float ink = uFluid * texture2D(uDye, gl_FragCoord.xy / uResolution).r;
+  float spot = smoothstep(0.03, 0.55, ink);
+  density = mix(density, max(density, 0.75), spot);
+
   // Dither: this dot is on when the cloud is denser than its Bayer threshold
   float on = density > bayer4(gl_FragCoord.xy) ? 1.0 : 0.0;
 
-  float alpha = on * uOpacity;
-  gl_FragColor = vec4(uColor * alpha, alpha); // premultiplied alpha
+  float alpha = on * mix(uOpacity, uSpotOpacity, spot);
+  vec3 color = mix(uColor, uAccent, spot);
+  gl_FragColor = vec4(color * alpha, alpha); // premultiplied alpha
 }
 `;
 
@@ -143,8 +155,11 @@ export const BODY_TEXTURE_DEFAULTS = {
   contrast: 4.5, // how defined the clouds are
   minDensity: 0.04, // share of dots in the emptiest areas (never 0: no blank patches)
   maxDensity: 0.7, // share of dots in the densest areas
-  opacityLight: 0.05, // from Figma: Body texture / light
-  opacityDark: 0.1, // from Figma: Body texture / dark
+  opacityLight: 0.055, // Figma: Body texture / light (0.05), +10% stronger
+  opacityDark: 0.11, // Figma: Body texture / dark (0.10), +10% stronger
+  fluid: true, // the cursor stirs coral "ink" into a liquid (mouse/trackpad only, not touch or reduced motion)
+  spotOpacity: 0.2, // dot opacity where the ink is thickest (theme.css --texture-ink-strength overrides it)
+  fluidActiveMs: 4000, // keep simulating (at full frame rate) this long after the last mouse move
   isCovered: () => false, // return true to skip frames while something opaque covers the screen
 };
 
@@ -162,16 +177,15 @@ export function createBodyTexture(canvas, options = {}) {
     maxDensity,
     opacityLight,
     opacityDark,
+    fluid: useFluid,
+    spotOpacity,
+    fluidActiveMs,
     isCovered,
   } = { ...BODY_TEXTURE_DEFAULTS, ...options };
 
-  const gl = canvas.getContext("webgl", {
-    alpha: true,
-    premultipliedAlpha: true,
-    antialias: false,
-    depth: false,
-    stencil: false,
-  });
+  // WebGL2 when available (the fluid needs it), otherwise WebGL1 without the fluid
+  const contextOptions = { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false };
+  const gl = canvas.getContext("webgl2", contextOptions) || canvas.getContext("webgl", contextOptions);
   // No WebGL: hide the canvas, the plain page background is the fallback
   if (!gl) {
     canvas.style.display = "none";
@@ -184,6 +198,7 @@ export function createBodyTexture(canvas, options = {}) {
   const program = gl.createProgram();
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
+  gl.bindAttribLocation(program, 0, "aPosition"); // the fluid's programs read the triangle from slot 0 too
   gl.linkProgram(program);
   gl.useProgram(program);
 
@@ -209,11 +224,48 @@ export function createBodyTexture(canvas, options = {}) {
   const uTime = uniform("uTime");
   const uColor = uniform("uColor");
   const uOpacity = uniform("uOpacity");
+  const uDye = uniform("uDye");
+  const uFluid = uniform("uFluid");
+  const uAccent = uniform("uAccent");
+  const uSpotOpacity = uniform("uSpotOpacity");
 
   const startTime = performance.now();
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  // The fluid only makes sense with a real pointer (mouse, trackpad)
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const fluid = useFluid
+    ? createFluid(gl, {
+        width: Math.ceil(window.innerWidth / pixelSize),
+        height: Math.ceil(window.innerHeight / pixelSize),
+      })
+    : null;
+  // Where the pointer was last (0..1, bottom-left origin) and when it last moved
+  const pointer = { x: 0, y: 0, known: false, lastMove: -Infinity };
 
-  function draw(now) {
+  function onPointerMove(event) {
+    if (!fluid || event.pointerType !== "mouse" || !finePointer.matches || reducedMotion.matches) return;
+    const x = event.clientX / window.innerWidth;
+    const y = 1 - event.clientY / window.innerHeight;
+    if (pointer.known) fluid.splat(x, y, x - pointer.x, y - pointer.y);
+    Object.assign(pointer, { x, y, known: true, lastMove: performance.now() });
+  }
+
+  function onPointerLeave() {
+    pointer.known = false;
+  }
+
+  const fluidActive = (now) => fluid !== null && now - pointer.lastMove < fluidActiveMs;
+
+  function draw(now, dt = 0) {
+    if (fluid && dt > 0 && fluidActive(now)) fluid.step(dt);
+    gl.useProgram(program); // the fluid uses its own programs, switch back
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.uniform1f(uFluid, fluid ? 1 : 0);
+    if (fluid) {
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, fluid.dye);
+      gl.uniform1i(uDye, 0);
+    }
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform1f(uTime, (now - startTime) / 1000);
     gl.clearColor(0, 0, 0, 0);
@@ -223,8 +275,17 @@ export function createBodyTexture(canvas, options = {}) {
 
   // Colors come from the design tokens: the dots are the foreground color, very faint
   function applyTheme() {
+    gl.useProgram(program);
     const isDark = document.documentElement.classList.contains("dark");
+    const styles = getComputedStyle(document.documentElement);
     gl.uniform3fv(uColor, cssColorToRgb(getComputedStyle(document.body).color));
+    // Ink color: the --texture-ink token in theme.css (light and dark values), accent as a fallback
+    const ink =
+      styles.getPropertyValue("--texture-ink").trim() || styles.getPropertyValue("--background-color-accent").trim();
+    gl.uniform3fv(uAccent, cssColorToRgb(ink || "#ff6b35"));
+    // Ink strength: the --texture-ink-strength token (a number), the spotOpacity option as a fallback
+    const strength = parseFloat(styles.getPropertyValue("--texture-ink-strength"));
+    gl.uniform1f(uSpotOpacity, Number.isFinite(strength) ? strength : spotOpacity);
     gl.uniform1f(uOpacity, isDark ? opacityDark : opacityLight);
     draw(performance.now());
   }
@@ -237,20 +298,25 @@ export function createBodyTexture(canvas, options = {}) {
     canvas.height = rows;
     canvas.style.width = `${columns * pixelSize}px`;
     canvas.style.height = `${rows * pixelSize}px`;
+    gl.useProgram(program);
     gl.uniform2f(uResolution, columns, rows);
+    if (fluid) fluid.resize(columns, rows);
     draw(performance.now());
   }
 
-  // ── Animation loop: ~30 fps, skipped while something covers the whole screen (isCovered) ──
+  // ── Animation loop: ~30 fps for the calm drift, full frame rate while the fluid is being stirred;
+  //    skipped while something covers the whole screen (isCovered) ──
   // The values that change while it runs live in one object (same pattern as useAutoplay)
   const loop = { frameId: null, lastFrame: 0, resizeTimer: null };
 
   function tick(now) {
     loop.frameId = requestAnimationFrame(tick);
-    if (now - loop.lastFrame < FRAME_INTERVAL) return;
+    const stirring = fluidActive(now);
+    if (!stirring && now - loop.lastFrame < FRAME_INTERVAL) return;
     if (isCovered()) return;
+    const dt = Math.min((now - loop.lastFrame) / 1000, 1 / 30); // seconds since the last frame (capped)
     loop.lastFrame = now;
-    draw(now);
+    draw(now, dt);
   }
 
   function play() {
@@ -297,6 +363,8 @@ export function createBodyTexture(canvas, options = {}) {
   document.addEventListener("visibilitychange", updatePlayback);
   reducedMotion.addEventListener("change", updatePlayback);
   canvas.addEventListener("webglcontextlost", onContextLost);
+  window.addEventListener("pointermove", onPointerMove, { passive: true });
+  document.documentElement.addEventListener("pointerleave", onPointerLeave);
 
   return function destroy() {
     pause();
@@ -306,6 +374,9 @@ export function createBodyTexture(canvas, options = {}) {
     document.removeEventListener("visibilitychange", updatePlayback);
     reducedMotion.removeEventListener("change", updatePlayback);
     canvas.removeEventListener("webglcontextlost", onContextLost);
+    window.removeEventListener("pointermove", onPointerMove);
+    document.documentElement.removeEventListener("pointerleave", onPointerLeave);
+    if (fluid) fluid.destroy();
     gl.deleteBuffer(buffer);
     gl.deleteProgram(program);
     gl.deleteShader(vertexShader);

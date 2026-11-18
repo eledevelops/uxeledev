@@ -1,0 +1,39 @@
+/* Camera lens icon — shutter "click" on hover */
+
+.lens-icon .lens-blade {
+  /* rotate in the SVG's own 1024×1024 units */
+  transform-box: view-box;
+}
+
+/* Each blade swivels around its own pin (set inline per blade) */
+.lens-icon.is-firing .lens-blade {
+  animation: lens-shutter 1000ms both;
+}
+
+/* Timing is set per keyframe: each curve controls the move to the next keyframe */
+@keyframes lens-shutter {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(1, 0, 0, 1);
+  } /* closed */
+  25% {
+    transform: rotate(26deg);
+    animation-timing-function: ease-out;
+  } /* snaps open, slight overshoot */
+  33% {
+    transform: rotate(24deg);
+  } /* settles */
+  60% {
+    transform: rotate(24deg);
+    animation-timing-function: cubic-bezier(1, 0, 0.75, 0);
+  } /* holds — the "exposure" */
+  100% {
+    transform: rotate(0deg);
+  } /* closes */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lens-icon.is-firing .lens-blade {
+    animation: none;
+  }
+}

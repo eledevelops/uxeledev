@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 import useSaveData from "./hooks/useSaveData";
+import useSoftSnap from "./hooks/useSoftSnap";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BodyTexture from "./components/BodyTexture";
 import HeroScrollVideo from "./components/HeroScrollVideo";
 import Hero from "./sections/Hero";
 import Intro from "./sections/Intro";
-import Stats from "./sections/Stats";
 import Projects from "./sections/Projects";
 
 import Skills from "./sections/Skills";
@@ -19,6 +19,7 @@ function App() {
   const reduceMotion = usePrefersReducedMotion();
 
   const saveData = useSaveData();
+  useSoftSnap();
 
   const [heroFailed, setHeroFailed] = useState(false);
   const showVideo = !reduceMotion && !saveData && !heroFailed;
@@ -36,7 +37,6 @@ function App() {
         {showVideo ? <HeroScrollVideo onFail={setHeroFailed} /> : <Hero />}
 
         <Intro />
-        <Stats />
         <Projects />
         <About />
         <Skills />

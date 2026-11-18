@@ -13,6 +13,11 @@
 > - **`loseContext()` on unmount: skipped.** React StrictMode reuses the same canvas in dev, and a lost context can't be re-acquired.
 >   The program, shaders and buffer are deleted instead (same as the hero and FlowText).
 > - The Globalization quote section was removed from the page; About and Contact are transparent.
+> - **Cursor fluid (added later, overriding "no cursor interaction"):** `src/lib/fluid.js` runs a small GPU
+>   "stable fluids" simulation (WebGL2, half-float targets). Mouse moves splat velocity + ink; the dot shader
+>   reads the ink (`uDye`) and turns those dots denser and coral (accent token). Full frame rate while stirred
+>   (`fluidActiveMs`), 30 fps drift otherwise; mouse/trackpad only, off for reduced motion, plain texture on WebGL1.
+>   Tuning constants at the top of `fluid.js` (ink, radius, force, dissipation, curl).
 
 You are working in Ele's portfolio repo (`uxeledev`): React + Vite + Tailwind CSS v4, GSAP for animation.
 Design tokens live in `theme.css` (imported after `tailwindcss`). Dark mode = class `dark` on `<html>`.
