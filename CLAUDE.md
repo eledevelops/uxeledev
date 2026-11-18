@@ -24,7 +24,7 @@ Ele is learning React by building this site himself, one phase at a time.
 - Reduced motion: when `prefers-reduced-motion: reduce`, nothing blurs, zooms, slides or scrubs — content shows in its final state. Wrap GSAP in `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)`.
 - Hosting: Cloudflare Workers static assets (`wrangler.jsonc`, serves `dist/`). Pushing to `main` on GitHub (eledevelops/uxeledev) deploys.
 - Font: Inter Tight, self-hosted (`@fontsource-variable/inter-tight`, imported in `src/index.css`; `--font-sans` is "Inter Tight Variable"; preloaded in `index.html` and `404.html`).
-- Prerendered: `npm run build` = `vite build` + `vite build -c vite.prerender.config.js` (Node build of `src/entry-server.jsx` into `dist-ssr/`) + `node scripts/prerender.js` (puts the HTML into `dist/client/index.html`). `src/main.jsx` hydrates it (`createRoot` in dev).
+- Prerendered: `npm run build` = `vite build` + `vite build -c vite.prerender.config.js` (Node build of `src/entry-server.jsx` into `dist-ssr/`) + `node scripts/prerender.js` (puts the HTML into `dist/client/index.html`) + `node scripts/llms-full.js` (writes `dist/client/llms-full.txt`, the full case studies for AI agents, from `src/data/projects/`; `public/llms.txt` is the hand-written summary). `src/main.jsx` hydrates it (`createRoot` in dev).
 
 ## Structure
 
