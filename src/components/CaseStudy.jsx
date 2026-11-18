@@ -14,6 +14,8 @@ export default function CaseStudy({ project, isOpen, onClose }) {
     if (isOpen) {
       dialogRef.current.scrollTop = 0;
       dialogRef.current.showModal();
+      // Focus the dialog itself, not the close button, so the X doesn't light up on open
+      dialogRef.current.focus();
     } else {
       dialogRef.current.close();
     }
@@ -29,9 +31,10 @@ export default function CaseStudy({ project, isOpen, onClose }) {
     <dialog
       aria-labelledby="case-study-title"
       ref={dialogRef}
+      tabIndex={-1}
       onClose={onClose}
       onClick={handleBackdropClick}
-      className="m-auto h-full max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0 border-2 border-border shadow-glow
+      className="m-auto h-full outline-none max-h-none w-full max-w-none bg-background text-foreground backdrop:bg-glass-strong backdrop:backdrop-blur-glass md:h-auto md:max-h-[calc(100dvh-4rem)] md:max-w-case-frame md:rounded-2xl translate-y-4 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-base ease-out open:translate-y-0 open:opacity-100 starting:open:translate-y-0 starting:open:opacity-0 backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-slow open:backdrop:opacity-100 starting:open:backdrop:opacity-0 border-2 border-border shadow-glow
 ">
       {/* Close button: sticks to the top-right corner while the case study scrolls */}
       <div className="sticky top-0 z-20 flex h-0 justify-end">
@@ -39,8 +42,10 @@ export default function CaseStudy({ project, isOpen, onClose }) {
           type="button"
           onClick={() => dialogRef.current.close()}
           aria-label="Close case study"
-          className="mt-4 mr-4 flex size-8 shrink-0 items-center justify-center rounded-full text-foreground transition-colors duration-base ease-out hover:text-accent md:mt-6 md:mr-6">
-          <Icon src={close} className="size-8" />
+          className="relative mt-4 mr-4 flex size-8 shrink-0 items-center justify-center rounded-full text-black transition-colors duration-base ease-out hover:text-accent md:mt-6 md:mr-6 md:text-foreground">
+          {/* Phones: white fill only inside the icon's ring (18px, centered), so it reads over photos */}
+          <span aria-hidden="true" className="absolute inset-[7px] rounded-full bg-white md:hidden" />
+          <Icon src={close} className="relative size-5 md:size-8" />
         </button>
       </div>
       {project && (

@@ -34,7 +34,7 @@ export default function Projects() {
               }}
               onPointerEnter={() => preloadCaseStudy(project)}
               onFocus={() => preloadCaseStudy(project)}
-              className="group relative block h-[240px] w-full overflow-hidden rounded-lg border border-border md:h-[365px]">
+              className="group relative isolate block h-[240px] w-full overflow-hidden rounded-lg border border-border md:h-[365px]">
               <div className="absolute -inset-4 transition duration-base ease-out touch:blur-card touch:brightness-75 group-hover:blur-card group-hover:brightness-75 group-focus-visible:blur-card group-focus-visible:brightness-75">
                 <img
                   src={project.image.img.src}

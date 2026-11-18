@@ -76,8 +76,13 @@ export default function CardFan() {
       <div ref={rightCardRef} className={cardClass}>
         <img src={cardStickers} loading="lazy" alt="A sheet of illustrated stickers" className="size-full object-cover" />
       </div>
-      <div className={`${cardClass} p-[15%]`}>
-        <img src={cardLogo} loading="lazy" alt="A purple and blue brand logo" className="size-full object-contain" />
+      <div className={cardClass}>
+        <img
+          src={cardLogo}
+          loading="lazy"
+          alt="A purple and blue brand logo"
+          className="absolute inset-[15%] size-[70%] object-contain"
+        />
       </div>
     </div>
   );

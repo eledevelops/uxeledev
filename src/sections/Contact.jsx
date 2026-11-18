@@ -10,9 +10,11 @@ export default function Contact() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <section id="contact" className="mx-auto flex min-h-svh max-w-case-frame flex-col justify-center gap-8 px-6 py-16 md:px-16 lg:py-32">
+    <section
+      id="contact"
+      className="mx-auto flex min-h-svh max-w-case-frame flex-col justify-center gap-8 px-6 py-16 md:px-16 lg:py-32">
       <FlowText className="text-heading-2xl md:text-hero xl:text-display">
-        <h2>Let's build an experience to remember.</h2>
+        <h2>Let's build an experience that support your goals.</h2>
       </FlowText>
       <p className="text-body text-muted-foreground">
         Open to front-end and full-stack roles, freelance projects, and interesting collaborations.
