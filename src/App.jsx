@@ -17,6 +17,7 @@ import About from "./sections/About";
 import Contact from "./sections/Contact";
 
 function App() {
+  const [isAutoplaying, setIsAutoplaying] = useState(false);
   const reduceMotion = usePrefersReducedMotion();
 
   const saveData = useSaveData();
@@ -33,9 +34,9 @@ function App() {
     <>
       {/* Ambient dot texture behind the body sections (the hero and footer cover it) */}
       <BodyTexture />
-      <Navbar />
+      <Navbar hidden={isAutoplaying} />
       <main id="top" className="overflow-x-clip">
-        {showVideo ? <HeroScrollVideo onFail={setHeroFailed} /> : <Hero />}
+        {showVideo ? <HeroScrollVideo onFail={setHeroFailed} onAutoplayChange={setIsAutoplaying} /> : <Hero />}
 
         <Intro />
         <Projects />

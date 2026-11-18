@@ -29,7 +29,7 @@ function subscribeToTheme(onChange) {
 const getIsDark = () => document.documentElement.classList.contains("dark");
 const getIsDarkOnServer = () => false;
 
-export default function Navbar() {
+export default function Navbar({ hidden = false }) {
   const [activeSection, setActiveSection] = useState("top");
 
   useEffect(() => {
@@ -168,7 +168,10 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 px-5">
+    <header
+      className={`fixed inset-x-0 top-4 z-50 px-5 transition-[translate,opacity] duration-slow ease-out ${
+        hidden ? "pointer-events-none -translate-y-full opacity-0" : ""
+      }`}>
       <nav
         aria-label="Main"
         className="mx-auto flex max-w-navbar items-center justify-between rounded-xl border border-border bg-glass px-5 py-4 backdrop-blur-glass-nav md:px-8 md:py-5">

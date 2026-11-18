@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollToPlugin);
 const GESTURE_GAP = 300; // ms: a longer pause between wheel events ends the starting swipe
 const MOMENTUM_EVENTS = 4; // this many shrinking deltas in a row = the finger lifted, momentum is fading
 
-export default function useAutoplay(trackRef, stageRef, { enabled = true, seconds = 11 } = {}) {
+export default function useAutoplay(trackRef, stageRef, { enabled = true, seconds = 11, onChange } = {}) {
   useEffect(() => {
     if (!enabled) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -32,6 +32,7 @@ export default function useAutoplay(trackRef, stageRef, { enabled = true, second
     const isAtTop = () => window.scrollY < 50;
 
     function startAutoplay() {
+      onChange(true);
       state.startingSwipe = true;
       state.shrinking = 0;
       state.rising = 0;
@@ -42,12 +43,14 @@ export default function useAutoplay(trackRef, stageRef, { enabled = true, second
       state.autoplay = gsap
         .timeline({ onComplete: () => (state.autoplay = null) })
         .to(window, { scrollTo: videoEnd, duration: seconds, ease: "none" })
+        .call(() => onChange(false))
         .to(window, { scrollTo: nextSectionTop, duration: 1.2, ease: "power2.inOut" });
     }
 
     function stopAutoplay() {
       state.autoplay.kill();
       state.autoplay = null;
+      onChange(false);
     }
 
     function onWheel(event) {
@@ -133,5 +136,5 @@ export default function useAutoplay(trackRef, stageRef, { enabled = true, second
       stage.removeEventListener("click", onStageClick);
       if (state.autoplay) state.autoplay.kill();
     };
-  }, [trackRef, stageRef, enabled, seconds]);
+  }, [trackRef, stageRef, enabled, seconds, onChange]);
 }

@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const AUTOPLAY_SECONDS = 11; // 724 frames in 11 s ≈ 66 fps
 const AUTOPLAY_ENABLED = true; // true = the first scroll down plays the video by itself
 
-export default function HeroScrollVideo({ onFail }) {
+export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
   const trackRef = useRef(null);
   const canvasRef = useRef(null);
   const barRef = useRef(null);
@@ -23,7 +23,7 @@ export default function HeroScrollVideo({ onFail }) {
   const pillRef = useRef(null);
   const pillButtonRef = useRef(null);
 
-  useAutoplay(trackRef, stageRef, { enabled: AUTOPLAY_ENABLED, seconds: AUTOPLAY_SECONDS });
+  useAutoplay(trackRef, stageRef, { enabled: AUTOPLAY_ENABLED, seconds: AUTOPLAY_SECONDS, onChange: onAutoplayChange });
 
   useLayoutEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");

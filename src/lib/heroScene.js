@@ -26,7 +26,12 @@ const SCENES = {
 const PARALLEL_LOADS = 6; // how many files download at the same time
 const MAX_DPR = 2; // never draw at more than 2x, even on 3x phones
 const STARS = { count: 1500, speed: 0.1, trailFade: 0.36, brightness: 0.25 };
-const CENTER_X = 0.5; // the spiral center is always in the middle horizontally
+const CENTER_X = 0.5; // the spiral center is always in the middle horizontally (of the frame)
+const FULL_W = 1920; // width of the full frames; the portrait set is the middle 608px of them
+const MAX_ZOOM = 1.1; // at most 10% extra zoom to make room for re-centering Ele
+// Where Ele stands on average (fraction of the full frame width; measured: night 49.1%, day 48.5%).
+// The crop is shifted so this point sits in the middle of the screen.
+const FOCUS_X = 0.488;
 
 const fileUrl = (folder, index) => `${folder}/f${String(index).padStart(3, "0")}.webp`;
 
@@ -241,6 +246,9 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
   const starBuffer = gl.createBuffer();
 
   // ── Size: match the canvas's on-screen size, crop the video like object-fit: cover ──
+  // Ele's position in THIS frame set (the portrait set is the middle of the full frames)
+  const focusX = (FOCUS_X * FULL_W - (FULL_W - frameWidth) / 2) / frameWidth;
+  const maxFocusShift = Math.abs(focusX - 0.5);
   const frameTexture = createTexture(gl);
   let trails = [];
   let width = 0;
@@ -277,10 +285,15 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
     canvas.width = Math.max(1, Math.round(width * dpr));
     canvas.height = Math.max(1, Math.round(height * dpr));
     createTrails();
-    const scale = Math.max(width / frameWidth, height / FRAME_H);
+    // Cover the canvas, plus just enough zoom (capped) to slide Ele to the middle without
+    // showing the frame's edges.
+    const cover = Math.max(width / frameWidth, height / FRAME_H);
+    const roomNeeded = width / ((1 - 2 * maxFocusShift) * frameWidth);
+    const scale = Math.max(cover, Math.min(roomNeeded, cover * MAX_ZOOM));
     displayW = frameWidth * scale;
     displayH = FRAME_H * scale;
-    offsetX = (width - displayW) / 2;
+    // Shift the crop so Ele is in the middle, but never past the frame's edges
+    offsetX = Math.min(0, Math.max(width - displayW, width / 2 - focusX * displayW));
     offsetY = (height - displayH) / 2;
     lastCenter = null;
     draw(); // resizing clears the canvas, so redraw right away
