@@ -169,12 +169,12 @@ export default function Navbar({ hidden = false }) {
 
   return (
     <header
-      className={`fixed inset-x-0 top-4 z-50 px-5 transition-[translate,opacity] duration-slow ease-out ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[translate,opacity] duration-slow ease-out md:top-4 md:px-5 ${
         hidden ? "pointer-events-none -translate-y-full opacity-0" : ""
       }`}>
       <nav
         aria-label="Main"
-        className="mx-auto flex max-w-navbar items-center justify-between rounded-xl border border-border bg-glass px-5 py-4 backdrop-blur-glass-nav md:px-8 md:py-5">
+        className="mx-auto flex h-[3.375rem] max-w-navbar items-center justify-between border-b border-border bg-glass px-5 backdrop-blur-glass-nav md:h-auto md:rounded-xl md:border md:px-8 md:py-5">
         <a href="#top" aria-label="Back to top" className="flex text-foreground md:hidden">
           <Icon src={logo} className="size-8" />
         </a>
@@ -258,8 +258,8 @@ export default function Navbar({ hidden = false }) {
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="fixed inset-0 flex flex-col justify-between bg-glass-strong p-6 backdrop-blur-glass md:hidden">
-          <div className="flex items-center justify-between">
+          className="fixed inset-0 flex flex-col justify-between bg-glass-strong px-5 pb-6 backdrop-blur-glass md:hidden">
+          <div className="flex h-[3.375rem] items-center justify-between border-b border-transparent">
             <a
               href="#top"
               aria-label="Back to top"
