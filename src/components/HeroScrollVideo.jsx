@@ -155,7 +155,12 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
         />
         <div className="pointer-events-none absolute inset-0 grid place-items-center px-4 text-center text-aside text-foreground text-shadow-aside">
           <p className="sr-only">The water was very very shallow... no miracles here, just dedication and hard work.</p>
-          <div ref={set1Ref} aria-hidden="true" className="col-start-1 row-start-1 opacity-0">
+          {/* Still hero (no video): the first caption stays on screen, low over the water so it
+              doesn't cover Ele. It's also the page's LCP there (Chrome ignores full-screen images). */}
+          <div
+            ref={set1Ref}
+            aria-hidden="true"
+            className={`col-start-1 row-start-1 ${isStill ? "self-end pb-8 md:pb-6" : "opacity-0"}`}>
             <p>The water was</p>
             <p>very very shallow...</p>
           </div>
