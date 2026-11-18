@@ -26,7 +26,7 @@ their own sections below the video. Built in **Phase 6**.
 | Frame size | 1920 × 1080 |
 | File packing | each WebP holds **two consecutive frames** stacked, plus their two sky mattes in a bottom strip → 1920 × 2700 per file |
 | Files | `f000–f361.webp` = night (dark) scene, `f362–f723.webp` = day (light) scene. 362 files per scene; ~42 MB night, ~51 MB day (WebP quality 80) |
-| Loading | only the active theme's scene loads, coarse to fine (every 8th file, then 4th, 2nd, 1st) with a thin progress bar. Until the active scene's first file arrives, the other scene's frames show |
+| Loading | only the active theme's scene loads, coarse to fine (every 8th file, then 4th, 2nd, 1st), in stages: nothing until the page has loaded and is idle, then the first coarse pass (47 of 362 files, ~3 MB on phones), and the rest only once the video starts (first frame past 0: scroll, swipe or Play). The thin progress bar shows from that moment. Until the active scene's first file arrives, the poster (frame 0 as an `<img>`, `.hero-poster`) or the other scene's frames show |
 
 The frames live in `public/hero/` (served as-is, not processed by Vite).
 
@@ -128,7 +128,7 @@ dropped: it caused double images.
 `prefers-reduced-motion: reduce` → `App.jsx` renders the static `Hero` (day or night image)
 instead of `HeroScrollVideo` (read live with `usePrefersReducedMotion`, so toggling the setting swaps
 without a reload; `ScrollTrigger.refresh()` re-measures the page after each swap). The same swap
-happens with Data Saver on or if WebGL fails (`onFail`). No video means no frames load, no pin, no scrub, no autoplay. Inside
+happens with Data Saver on or if the WebGL context is lost (`onFail`). Without fast WebGL (none, or drawn in software: `hasFastWebGL()` in `src/lib/webglSupport.js`, e.g. PageSpeed/Lighthouse) the hero stays as a still, one-screen poster instead. No video means no frames load, no pin, no scrub, no autoplay. Inside
 `HeroScrollVideo` the GSAP setup is also wrapped in
 `gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", …)` as a second safety net.
 

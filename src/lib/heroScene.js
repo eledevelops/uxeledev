@@ -11,7 +11,12 @@
  *   scene.pause();           // stop it (e.g. when the hero is off-screen)
  *   scene.destroy();         // stop, cancel loading, free the GPU memory (component cleanup)
  *
- * onProgress(fraction) is called while the active theme's frames load (0 to 1).
+ * Frames load in stages, so the page itself finishes loading fast (and phones don't spend data on
+ * a video nobody plays): nothing until the page has loaded and gone idle, then a first coarse pass
+ * (every 8th file), and everything else only once the video starts (the first frame past 0).
+ *
+ * onProgress(fraction) is called while the active theme's frames load (0 to 1), from the moment
+ * the video starts; before that it reports 0 (the bar stays hidden).
  * Returns null if the browser has no WebGL. The hero then keeps its static image.
  */
 import { STAR_CENTER_Y } from "./heroStarCenters";
@@ -145,6 +150,8 @@ function buildLoadOrder() {
   return order;
 }
 const LOAD_ORDER = buildLoadOrder();
+// The first, coarse pass: the first and last file plus every 8th (47 of 362 files)
+const FIRST_PASS = 2 + Math.ceil(FILE_COUNT / 8) - 1;
 
 // ── The scene ──────────────────────────────────────────────────────
 
@@ -190,19 +197,27 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
   let shownKey = null; // which file is in the GPU right now, e.g. "dark12"
   let lastCenter = null;
 
-  // ── Frame loading: only the visible theme loads ──
+  // ── Frame loading: only the visible theme loads, in stages ──
   const images = { dark: new Array(FILE_COUNT).fill(null), light: new Array(FILE_COUNT).fill(null) };
-  const loadStarted = { dark: false, light: false };
-  const loadedCount = { dark: 0, light: 0 };
+  // Per scene: the next LOAD_ORDER position, downloads in flight, files done, how far it may load
+  const loading = {
+    dark: { next: 0, active: 0, loaded: 0, limit: 0 },
+    light: { next: 0, active: 0, loaded: 0, limit: 0 },
+  };
+  // 0: waiting for the page to finish loading, 1: first coarse pass only, 2: everything (video started)
+  let stage = 0;
+  const stageLimit = () => (stage === 0 ? 0 : stage === 1 ? FIRST_PASS : LOAD_ORDER.length);
 
-  function loadScene(name) {
-    if (loadStarted[name]) return;
-    loadStarted[name] = true;
-    let next = 0;
+  function reportProgress() {
+    onProgress(stage === 2 ? loading[currentTheme].loaded / FILE_COUNT : 0);
+  }
 
-    function loadNext() {
-      if (destroyed || next >= LOAD_ORDER.length) return;
-      const index = LOAD_ORDER[next++];
+  // Start downloads until PARALLEL_LOADS are in flight or the scene reached its limit
+  function pump(name) {
+    const scene = loading[name];
+    while (!destroyed && scene.active < PARALLEL_LOADS && scene.next < scene.limit) {
+      const index = LOAD_ORDER[scene.next++];
+      scene.active++;
       const image = new Image();
       image.src = fileUrl(folder, SCENES[name].firstFile + index);
       image
@@ -213,13 +228,36 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
         .catch(() => {}) // a missing file just stays empty; its neighbours fill in
         .finally(() => {
           if (destroyed) return;
-          loadedCount[name]++;
-          if (name === currentTheme) onProgress(loadedCount[name] / FILE_COUNT);
-          loadNext();
+          scene.active--;
+          scene.loaded++;
+          if (name === currentTheme) reportProgress();
+          pump(name);
         });
     }
-    for (let k = 0; k < PARALLEL_LOADS; k++) loadNext();
   }
+
+  // Let the visible scene load as far as the current stage allows
+  function loadVisibleScene() {
+    const scene = loading[currentTheme];
+    scene.limit = Math.max(scene.limit, stageLimit());
+    pump(currentTheme);
+  }
+
+  function setStage(value) {
+    if (destroyed || value <= stage) return;
+    stage = value;
+    reportProgress();
+    loadVisibleScene();
+  }
+
+  // Stage 1 once the page has loaded (poster, fonts, scripts) and the browser is idle
+  function startWhenIdle() {
+    const start = () => setStage(1);
+    if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 2000 });
+    else setTimeout(start, 200);
+  }
+  if (document.readyState === "complete") startWhenIdle();
+  else window.addEventListener("load", startWhenIdle, { once: true });
 
   // The closest file that has already loaded (looks both ways).
   function nearestFile(name, file) {
@@ -409,7 +447,6 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
   resize();
-  loadScene(currentTheme);
 
   // ── Render loop: only runs between play() and pause() ──
   function tick() {
@@ -420,13 +457,14 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
   return {
     setFrame(value) {
       frame = Math.min(Math.max(value, 0), FRAME_COUNT - 1);
+      if (frame > 0) setStage(2); // the video started (scroll, swipe, Play): load everything
     },
     setTheme(name) {
       if (name === currentTheme) return;
       currentTheme = name;
       lastCenter = null;
-      onProgress(loadedCount[name] / FILE_COUNT);
-      loadScene(name);
+      reportProgress();
+      loadVisibleScene();
     },
     play() {
       if (frameId !== null) return;
@@ -442,6 +480,7 @@ export function createHeroScene(canvas, { theme, folder = "/hero", frameWidth = 
       // runs effects twice, and the second run reuses this same canvas.
       this.pause();
       destroyed = true;
+      window.removeEventListener("load", startWhenIdle);
       resizeObserver.disconnect();
       trails.forEach((trail) => {
         gl.deleteTexture(trail.texture);
