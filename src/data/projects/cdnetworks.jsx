@@ -31,12 +31,12 @@ const cdnetworks = {
       "Web Design & Development",
       "Sales & Trade Show Design",
     ],
-    roles: "Lead Brand Designer & Front-End Developer",
+    roles: "Lead Brand Designer & Front\u2011End Developer",
     industry: "Content Delivery Network",
     website: "www.cdnetworks.com",
     duration: "2016 – 2024",
     challenge:
-      "In 2019, Wangsu acquired Quantil, CDNetworks and Video CDN, bringing several companies with separate identities under one roof. Quantil's brand had to stay in place to keep a key client that required a US presence, while CDNetworks needed a modern, unified identity strong enough to take the company beyond South Korea and into all of Asia-Pacific.",
+      "MileWeb was already doing business in Silicon Valley, but its brand lacked the connection and identity the team envisioned. I was brought in to change that — developing a stronger, more distinctive brand that would resonate with the people, culture, and innovative spirit of Silicon Valley. In 2019, Wangsu acquired Quantil, CDNetworks and Video CDN, bringing several companies with separate identities under one roof. Quantil's brand had to stay in place to keep key clients that required a US presence, while CDNetworks needed a modern, unified identity strong enough to take the company beyond South Korea and into all of Asia-Pacific.",
     approach: [
       {
         lead: "One brand from many.",
@@ -57,8 +57,8 @@ const cdnetworks = {
     ],
     result: (
       <>
-        The rebrand became the face of CDNetworks' expansion from South Korea into all of Asia-Pacific. The brand system
-        was still in active use more than two years after my role ended.
+        The rebrand became the face of CDNetworks' expansion from South Korea into all of Asia-Pacific.{" "}
+        <strong className="text-coral-200 dark:text-coral-600">The brand system is still active today.</strong>
       </>
     ),
     gallery: [

@@ -180,9 +180,8 @@ export default function HeroScrollVideo({ onFail, onAutoplayChange }) {
             type="button"
             className="invisible flex items-center gap-2 rounded-full whitespace-nowrap border border-border bg-glass px-5 py-3 text-body-bold text-foreground opacity-0 backdrop-blur-glass transition-colors duration-base hover:border-coral-400 hover:bg-coral-400 hover:text-white focus-visible:border-coral-400 focus-visible:bg-coral-400 focus-visible:text-white">
             <Icon src={play} className="size-5" />
-            Play
+            Click to Play
             <span className="font-normal ">
-              <span className="touch:hidden">or Scroll</span>
               <span className="can-hover:hidden">or swipe up</span>
             </span>
           </button>

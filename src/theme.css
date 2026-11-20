@@ -131,6 +131,7 @@
   --container-case-frame: 84rem; /* 1344, 64px padding */
   --container-modal: 35rem; /* 560, contact modal */
   --container-card-fan: 35rem; /* 560, skills card fan column */
+  --container-flyout: 18.75rem; /* 300, flyout max width incl. arrow */
 
   /* Breakpoints: not defined in Figma. Tailwind's md/lg/xl values,
      kept so responsive prefixes still work. Adjust once mobile is designed. */

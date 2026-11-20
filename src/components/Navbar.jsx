@@ -5,6 +5,7 @@ import logo from "../assets/icons/logo.svg";
 import separator from "../assets/icons/separator.svg";
 import menu from "../assets/icons/menu.svg";
 import close from "../assets/icons/close.svg";
+import linkedin from "../assets/icons/linkedin.svg";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -178,9 +179,9 @@ export default function Navbar({ hidden = false }) {
         <a href="#top" aria-label="Back to top" className="flex text-foreground md:hidden">
           <Icon src={logo} className="size-8" />
         </a>
-        <div className="hidden flex-1 md:flex">
+        <div className="hidden flex-1 md:flex align-middle">
           <ul className="flex items-center gap-3">
-            <li>
+            {/* <li>
               <a
                 href="https://github.com/eledevelops"
                 target="_blank"
@@ -192,18 +193,18 @@ export default function Navbar({ hidden = false }) {
             </li>
             <li aria-hidden="true" className="flex">
               <Icon src={separator} className="size-[3px] text-muted-foreground" />
-            </li>
+            </li> */}
             <li>
               <a
                 href="https://www.linkedin.com/in/eleazar-madera-451163105/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="text-overline uppercase text-muted-foreground transition-colors hover:text-accent">
-                Li
+                className=" flex  hover:text-accent">
+                <Icon src={linkedin} className="size-4" />
               </a>
             </li>
-            <li aria-hidden="true" className="flex">
+            {/* <li aria-hidden="true" className="flex">
               <Icon src={separator} className="size-[3px] text-muted-foreground" />
             </li>
             <li>
@@ -215,7 +216,7 @@ export default function Navbar({ hidden = false }) {
                 className="text-overline uppercase text-muted-foreground transition-colors hover:text-accent">
                 X
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div ref={navLinksRef} className="relative hidden md:block">

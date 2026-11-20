@@ -16,7 +16,7 @@ export default function Stats() {
           <p className="text-meta">Years Of Experience</p>
         </li>
         <li className="lg:flex-1">
-          <p className="text-heading-xl xl:text-heading-2xl">Polyethnic</p>
+          <p className="text-heading-xl xl:text-heading-2xl">Global</p>
           <p className="text-meta">Mind Set</p>
         </li>
       </ul>

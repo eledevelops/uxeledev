@@ -3,6 +3,7 @@ import Icon from "./Icon";
 import close from "../assets/icons/close.svg";
 import { tileSizes } from "../lib/caseStudyImages";
 import GalleryVideo from "./GalleryVideo";
+import ConnectorGlow from "./ConnectorGlow";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 
 export default function CaseStudy({ project, isOpen, onClose }) {
@@ -92,7 +93,9 @@ export default function CaseStudy({ project, isOpen, onClose }) {
             <h3 className="text-heading md:text-heading-xl">{project.caseStudy.pillsTitle}</h3>
             <ul className="flex flex-wrap gap-2 md:gap-4">
               {project.caseStudy.pills.map((pill) => (
-                <li key={pill} className="rounded-full border border-strong bg-background px-3 py-1 text-body">
+                <li
+                  key={pill}
+                  className="rounded-full border border-neutral-300 bg-background px-3 py-1 text-body transition-colors duration-slow ease-out hover:bg-accent hover:text-amber-50 hover:border-accent">
                   {pill}
                 </li>
               ))}
@@ -136,13 +139,14 @@ export default function CaseStudy({ project, isOpen, onClose }) {
             />
             <div
               aria-hidden="true"
-              className="absolute top-[calc(100%+56px)] right-[172px] left-3/4 hidden h-[44px] border-t-2 border-l-2 border-divider lg:block"
+              className="absolute top-[calc(100%+56px)] -right-[172px] left-3/4 hidden h-[44px] border-t-2 border-l-2 border-divider lg:block"
             />
+            <ConnectorGlow key={project.id} play={isOpen} />
           </div>
 
           <div className="flex flex-col gap-4 md:gap-8 lg:pt-16">
             <h3 className="text-heading text-left lg:text-center">The Approach:</h3>
-            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 text-pretty">
               {project.caseStudy.approach.map((step) => (
                 <li key={step.lead} className="text-body lg:text-center">
                   <strong>{step.lead}</strong> {step.text}
@@ -164,7 +168,7 @@ export default function CaseStudy({ project, isOpen, onClose }) {
                   key={tile.id}
                   className={`overflow-hidden rounded-lg border border-border bg-muted ${tile.className}`}>
                   {tile.video ? (
-                    <GalleryVideo video={tile.video} label={tile.alt} className={tile.imageClass} />
+                    <GalleryVideo key={project.id} video={tile.video} label={tile.alt} className={tile.imageClass} />
                   ) : (
                     <img
                       src={tile.image.img.src}

@@ -8,10 +8,11 @@ import { caseStudyVideo } from "../../lib/caseStudyVideos";
 
 const megaHard = {
   id: "mega-hard",
-  title: "Mega Hard Limited",
+  title: "Megahard Limited",
   tagline: "A brand built for the security & gaming niche",
   image: megaHardImage,
   span: "md:col-span-6",
+  imagePosition: "object-top",
   caseStudy: {
     title: "MEGAHARD",
     intro: (
@@ -31,12 +32,12 @@ const megaHard = {
       "Web Design & Development",
       "Video Production",
     ],
-    roles: "Lead Brand Designer & Front-End Developer",
+    roles: "Lead Brand Designer & Front\u2011End Developer",
     industry: "Network Infrastructure & Security",
     website: "www.megahardlimited.com",
     duration: "Dec. 2025 – Jan. 2026",
     challenge:
-      "Mega Hard Limited was a brand-new company selling cloud and network security equipment and services to gaming and online betting operators. For that audience, downtime means lost revenue, so they only buy from providers they trust. With no history to point to, the brand had to look established from day one and speak the industry's language in both English and Chinese.",
+      "Megahard Limited was a brand-new company selling cloud and network security equipment and services to gaming and online betting operators. For that audience, downtime means lost revenue, so they only buy from providers they trust. With no history to point to, the brand had to look established from day one and speak the industry's language in both English and Chinese.",
     approach: [
       {
         lead: "Trust from day one.",
@@ -57,15 +58,16 @@ const megaHard = {
     ],
     result: (
       <>
-        Mega Hard Limited launched as a complete, market-ready brand: identity, bilingual website, sales materials,
-        video and event assets, all delivered in under two months.
+        Megahard Limited launched as a complete, market-ready brand: identity, bilingual website, sales materials, video
+        and event assets,{" "}
+        <strong className="text-coral-200 dark:text-coral-600">all delivered in under two months.</strong>
       </>
     ),
     gallery: [
       {
         id: "homepage-desktop",
         image: megaHardHomepageDesktop,
-        alt: "Mega Hard Limited homepage on desktop",
+        alt: "Megahard Limited homepage on desktop",
         className: "col-span-2 lg:col-span-8 lg:h-[440px]",
         imageClass: "size-full object-cover object-top",
       },
@@ -76,14 +78,14 @@ const megaHard = {
       {
         id: "event-booth",
         image: megaHardEventBooth,
-        alt: "Mega Hard and Cloudflare trade show booth",
+        alt: "Megahard and Cloudflare trade show booth",
         className: "col-span-2 lg:col-span-4 lg:h-[406px]",
         imageClass: "size-full object-cover object-top",
       },
       {
         id: "brochure",
         video: caseStudyVideo("mega-hard/brochure", { loop: true }),
-        alt: "Mega Hard brochure: Build AI Infrastructure for Web3 & Fintech",
+        alt: "Megahard brochure: Build AI Infrastructure for Web3 & Fintech",
         className: "col-span-2 lg:col-span-8 lg:h-[406px]",
         imageClass: "size-full object-cover object-top",
       },

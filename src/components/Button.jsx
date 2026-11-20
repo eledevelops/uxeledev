@@ -2,11 +2,17 @@
 // On hover a lighter gradient fades in over the default one (CSS can't animate between two gradients)
 // and a soft shadow lifts it. Every other prop (onClick, disabled…) is passed straight to the <button>.
 // The 404 page (plain HTML) has a copy of these classes on its "Back home" link.
-export default function Button({ children, className = "", type = "button", ...buttonProps }) {
+
+const sizes = {
+  md: "px-4 py-3 text-body-bold",
+  lg: "px-6 py-4 text-heading",
+};
+
+export default function Button({ children, className = "", type = "button", size = "md", ...buttonProps }) {
   return (
     <button
       type={type}
-      className={`group relative isolate overflow-hidden rounded-lg bg-linear-to-r from-coral-300 from-38% to-coral-600 to-94% px-4 py-3 text-body-bold text-white transition-shadow duration-base ease-out enabled:hover:shadow-button focus-visible:shadow-button disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      className={`group relative isolate overflow-hidden rounded-lg bg-linear-to-r from-coral-300 from-38% to-coral-600 to-94% text-white transition-shadow duration-base ease-out enabled:hover:shadow-button focus-visible:shadow-button disabled:cursor-not-allowed disabled:opacity-50 ${sizes[size] ?? sizes.md} ${className}`}
       {...buttonProps}>
       {/* Hover gradient: fades in over the default one */}
       <span

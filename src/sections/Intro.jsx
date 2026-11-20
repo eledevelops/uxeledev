@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+import RotatingWord from "../components/RotatingWord";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -9,12 +10,16 @@ const TEXT =
   "I am a front-end developer with 10+ years of experience engineering brands, campaigns and the websites that carry them.";
 
 // The 4 stats under the sentence. Numbers count up from 0 to `count` (then `suffix`);
-// entries without `count` (Polyethnic) just fade in.
+// the entry with `words` (Mind Set) fades in, then rotates through its words.
+
 const STATS = [
   { count: 5, suffix: "K+", label: "Hours Of Team Collab" },
   { count: 100, suffix: "+", label: "Projects In 5 Domains" },
   { count: 10, suffix: "+", label: "Years Of Experience" },
-  { text: "Polyethnic", label: "Mind Set" },
+  {
+    words: ["Global", "Expansive", "Limitless", "Holistic", "Universal", "Inclusive", "Boundless"],
+    label: "Mind Set",
+  },
 ];
 
 export default function Intro() {
@@ -105,7 +110,7 @@ export default function Intro() {
     <section
       ref={sectionRef}
       id="intro"
-      className="flex min-h-svh flex-col items-center justify-center gap-12 px-6 py-24 text-foreground md:gap-16">
+      className="flex min-h-svh flex-col items-center justify-center gap-12 px-6 py-24 text-foreground md:gap-32">
       <p className="max-w-intro text-center text-heading-xl md:text-heading-2xl">
         {/* Screen readers read the sentence normally; the animated letters are hidden from them */}
         <span className="sr-only">{TEXT}</span>
@@ -125,7 +130,9 @@ export default function Intro() {
                   {`${stat.count}${stat.suffix}`}
                 </p>
               ) : (
-                <p className="text-heading-xl xl:text-heading-2xl">{stat.text}</p>
+                <p className="text-heading-xl xl:text-heading-2xl text-accent">
+                  <RotatingWord words={stat.words} />
+                </p>
               )}
               <p className="text-meta">{stat.label}</p>
             </li>

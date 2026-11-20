@@ -11,7 +11,7 @@ const PHONE = "(max-width: 27.5rem)";
 export default function Hero() {
   return (
     <section className="relative">
-      <h1 className="sr-only">Eleazar Madera, front-end developer</h1>
+      <h1 className="sr-only">{"Eleazar Madera, Front\u2011End Developer"}</h1>
       <picture>
         <source media={PHONE} srcSet={heroDayPhone} />
         <img

@@ -43,13 +43,12 @@ export default function Projects() {
                   width={project.image.img.w}
                   height={project.image.img.h}
                   alt=""
-                  className="size-full object-cover"
+                  className={`size-full object-cover ${project.imagePosition ?? ""}`}
                   loading="lazy"
                 />
               </div>
-              <div className="absolute inset-0 bg-overlay" />
-              <div
-                className="relative flex h-full flex-col items-center justify-center gap-1 px-8 text-center text-neutral-50 transition duration-base ease-out can-hover:opacity-0 can-hover:group-hover:opacity-100 can-hover:group-focus-visible:opacity-100">
+              <div className="absolute inset-0 " />
+              <div className="relative flex h-full flex-col items-center justify-center gap-1 px-8 text-center text-neutral-50 transition duration-base ease-out can-hover:opacity-0 can-hover:group-hover:opacity-100 can-hover:group-focus-visible:opacity-100">
                 <span className="block text-heading md:text-heading-xl">{project.title}</span>
                 <span className="block text-caption md:text-body-lg">{project.tagline}</span>
               </div>

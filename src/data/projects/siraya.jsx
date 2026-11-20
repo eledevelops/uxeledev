@@ -31,7 +31,7 @@ const siraya = {
       "Globalization Strategy",
       "Custom WP Build",
     ],
-    roles: "Lead Brand Designer & Front-End Developer",
+    roles: "Lead Brand Designer & Front\u2011End Developer",
     industry: "Cloud Infrastructure & CDN",
     website: "www.sirayatech.com",
     duration: "2024 – 2026",
@@ -58,7 +58,8 @@ const siraya = {
     result: (
       <>
         In 18 months, Siraya grew from a handful of clients to more than 600. That growth led to partnerships with{" "}
-        <strong>Cloudflare</strong> and <strong>TiDB</strong> and close collaboration with <strong>AWS</strong>.
+        <strong className="text-coral-200 dark:text-coral-600">Cloudflare</strong> and <strong className="text-coral-200 dark:text-coral-600">TiDB</strong> and close
+        collaboration with <strong className="text-coral-200 dark:text-coral-600">AWS</strong>.
       </>
     ),
     gallery: [

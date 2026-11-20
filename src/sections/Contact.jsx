@@ -16,30 +16,25 @@ export default function Contact() {
       <FlowText className="text-heading-2xl md:text-hero xl:text-display">
         <h2>Let's build an experience that support your goals.</h2>
       </FlowText>
-      <p className="text-body text-muted-foreground">
+      <p className="text-body-lg text-muted-foreground">
         Open to front-end and full-stack roles, freelance projects, and interesting collaborations.
       </p>
-      <Button onClick={() => setIsContactOpen(true)} className="self-start">
+      <Button size="lg" onClick={() => setIsContactOpen(true)} className="self-start">
         Message Me
       </Button>
 
       <hr className="border-border" />
-      <div className="flex flex-col gap-5 md:flex-row md:items-center">
+      <div className="flex align-middle flex-col gap-5 md:flex-row md:items-center">
         <div className="flex items-center gap-5">
           <a
             href="https://www.linkedin.com/in/eleazar-madera-451163105/"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
-            className="text-foreground transition-colors hover:text-accent">
+            className="flex text-foreground transition-colors hover:text-accent">
             <Icon src={linkedin} className="size-8" />
           </a>
-          <a
-            href="mailto:hello@uxele.dev"
-            aria-label="Email me"
-            className="text-foreground transition-colors hover:text-accent">
-            <Icon src={mail} className="size-10" />
-          </a>
+          |
         </div>
         <a href="mailto:hello@uxele.dev" className="text-heading text-accent hover:underline md:text-heading-xl">
           hello@uxele.dev

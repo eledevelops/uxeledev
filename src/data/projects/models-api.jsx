@@ -10,6 +10,7 @@ const modelsApi = {
   tagline: "AI model catalog with live filtering",
   image: modelsApiImage,
   span: "md:col-span-5",
+  imagePosition: "object-top",
   caseStudy: {
     title: "SIRAYA.AI Models",
     intro: (
@@ -20,7 +21,7 @@ const modelsApi = {
     ),
     pillsTitle: "Built with:",
     pills: ["JavaScript", "HTML/CSS", "REST API", "Axios", "IntersectionObserver", "Responsive UI"],
-    roles: "Front-End Developer",
+    roles: "Front\u2011End Developer",
     industry: "AI / LLM API Platform",
     website: "www.siraya.ai/models",
     challenge:
@@ -45,10 +46,11 @@ const modelsApi = {
     ],
     result: (
       <>
-        A <strong>self-maintaining catalog</strong> that lets customers find the right model <strong>in seconds</strong>
-        . New models, providers and capabilities appear in the filters automatically as the API updates, with no code
-        changes. After the first load, every search, filter and sort runs instantly in the browser, with{" "}
-        <strong>no extra requests to the server</strong>.
+        A <strong className="text-coral-200 dark:text-coral-600">self-maintaining catalog</strong> that lets customers
+        find the right model <strong className="text-coral-200 dark:text-coral-600">in seconds</strong>. New models,
+        providers and capabilities appear in the filters automatically as the API updates, with no code changes. After
+        the first load, every search, filter and sort runs instantly in the browser, with{" "}
+        <strong className="text-coral-200 dark:text-coral-600">no extra requests to the server</strong>.
       </>
     ),
     gallery: [

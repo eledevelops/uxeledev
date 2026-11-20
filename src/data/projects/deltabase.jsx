@@ -27,7 +27,7 @@ const deltabase = {
       "Marketing Collateral",
       "Web Design & Development",
     ],
-    roles: "Lead Brand Designer & Front-End Developer",
+    roles: "Lead Brand Designer & Front\u2011End Developer",
     industry: "Cloud Infrastructure & CDN",
     website: "www.deltabase.vn",
     duration: "Two Weeks",
@@ -53,8 +53,9 @@ const deltabase = {
     ],
     result: (
       <>
-        Deltabase launched in two weeks with a complete brand, website and marketing materials, giving Siraya the local
-        presence it needed to do business in Vietnam.
+        Deltabase{" "}
+        <strong className="text-coral-200 dark:text-coral-600">launched in two weeks with a complete brand</strong>,
+        website and marketing materials, giving Siraya the local presence it needed to do business in Vietnam.
       </>
     ),
     gallery: [

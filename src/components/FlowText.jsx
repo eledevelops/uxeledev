@@ -60,7 +60,13 @@ export default function FlowText({ children, className = "" }) {
     // The box bleeds 0.75em out on each side (negative margin + the same padding inside), so the gradient
     // covers the enlarged words while the text itself stays exactly where it was.
     <div className={`relative -mx-[0.75em] -my-[0.2em] mix-blend-multiply dark:mix-blend-screen ${className}`}>
-      <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 size-full" />
+      {/* The canvas stays 4px inside the white box, so its edges never peek out as a thin line.
+          A canvas doesn't stretch from inset alone (its size comes from its own pixels), so set the size too. */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        className="absolute top-1 left-1 size-[calc(100%-var(--spacing-2))]"
+      />
       <div
         ref={textRef}
         className="relative bg-white px-[0.75em] py-[0.2em] text-black mix-blend-screen dark:bg-black dark:text-white dark:mix-blend-multiply">

@@ -8,6 +8,7 @@ import { skillGroups, softSkills } from "../data/skills";
 import check from "../assets/icons/check.svg";
 import whatIDoBackground from "../assets/images/skills/what-i-do-bg.webp";
 import globalTeams from "../assets/images/skills/global-teams.webp";
+import Flyout from "../components/Flyout";
 // Phones show only the middle of the wide photo (object-cover in a tall box), so they get a centered
 // portrait crop made at build time by vite-imagetools: same look, about a third of the bytes.
 import globalTeamsPhone from "../assets/images/skills/global-teams.webp?w=820&h=1261&fit=cover&position=center";
@@ -71,12 +72,22 @@ export default function Skills() {
                 <ul data-skill-icons className="flex flex-wrap gap-4 lg:gap-8">
                   {group.icons.map((icon) => (
                     <li key={icon.name}>
-                      {/* Animated icons are components; the rest are image files */}
-                      {icon.Component ? (
-                        <icon.Component title={icon.name} className="size-16 lg:size-24" />
-                      ) : (
-                        <img src={icon.src} alt={icon.name} loading="lazy" className="size-16 lg:size-24" />
-                      )}
+                      <Flyout label={icon.name}>
+                        {/* Animated icons are components; the rest are image files */}
+                        {icon.Component ? (
+                          <icon.Component
+                            title={icon.name}
+                            className="size-16 lg:size-24"
+                          />
+                        ) : (
+                          <img
+                            src={icon.src}
+                            alt={icon.name}
+                            loading="lazy"
+                            className="size-16 lg:size-24"
+                          />
+                        )}
+                      </Flyout>
                     </li>
                   ))}
                 </ul>
@@ -105,13 +116,13 @@ export default function Skills() {
             <span className="hidden md:inline"> Tons of fun!</span>
           </p>
         </div>
-        <p className="absolute inset-x-4 bottom-0 z-10 mx-auto max-w-case-study translate-y-10 rounded-2xl bg-background p-5 text-center text-heading text-foreground md:inset-x-16 md:p-8 md:text-heading-xl">
+        <p className="absolute inset-x-4 bottom-0 z-10 mx-auto max-w-case-study translate-y-10 rounded-2xl bg-background p-5 text-center text-heading text-foreground md:inset-x-16 md:p-8 md:text-heading-xl shadow-glow">
           The greatest reward in my career are the friends and connections I made around the world.
         </p>
       </div>
 
       {/* Soft Skills */}
-      <div className="mx-auto flex max-w-case-frame flex-col gap-8 px-6 pt-32 pb-16 md:px-16 md:pb-24">
+      <div className="mx-auto mt-24 flex max-w-case-frame flex-col gap-8 px-6 pt-32 pb-16 md:px-16 md:pb-24">
         <h3 className="text-heading-2xl text-foreground md:text-hero">Soft Skills</h3>
         <div className="flex flex-col items-center gap-10 md:flex-row md:gap-8">
           <ul className="flex w-full flex-col gap-4 md:flex-1 md:gap-6">
