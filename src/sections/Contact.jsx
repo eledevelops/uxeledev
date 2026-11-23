@@ -14,7 +14,7 @@ export default function Contact() {
       id="contact"
       className="mx-auto flex min-h-svh max-w-case-frame flex-col justify-center gap-8 px-6 py-16 md:px-16 lg:py-32">
       <FlowText className="text-heading-2xl md:text-hero xl:text-display">
-        <h2>Let's build an experience that support your goals.</h2>
+        <h2>Let's build an experience that supports your goals.</h2>
       </FlowText>
       <p className="text-body-lg text-muted-foreground">
         Open to front-end and full-stack roles, freelance projects, and interesting collaborations.
@@ -24,7 +24,7 @@ export default function Contact() {
       </Button>
 
       <hr className="border-border" />
-      <div className="flex align-middle flex-col gap-5 md:flex-row md:items-center">
+      <div className="flex flex-row align-middle flex-col gap-5 md:flex-row md:items-center ">
         <div className="flex items-center gap-5">
           <a
             href="https://www.linkedin.com/in/eleazar-madera-451163105/"

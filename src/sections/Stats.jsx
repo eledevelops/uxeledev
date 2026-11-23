@@ -9,7 +9,7 @@ export default function Stats() {
         </li>
         <li className="lg:flex-1">
           <p className="text-heading-xl xl:text-heading-2xl">100+</p>
-          <p className="text-meta">Projects In 5 Domains</p>
+          <p className="text-meta">Projects In Multiple Domains</p>
         </li>
         <li className="lg:flex-1">
           <p className="text-heading-xl xl:text-heading-2xl">10+</p>

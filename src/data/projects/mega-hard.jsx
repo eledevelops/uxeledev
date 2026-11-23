@@ -60,7 +60,7 @@ const megaHard = {
       <>
         Megahard Limited launched as a complete, market-ready brand: identity, bilingual website, sales materials, video
         and event assets,{" "}
-        <strong className="text-coral-200 dark:text-coral-600">all delivered in under two months.</strong>
+        <strong className="text-coral-200 dark:text-coral-600">all delivered in under two months</strong>.
       </>
     ),
     gallery: [

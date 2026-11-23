@@ -14,7 +14,7 @@ const TEXT =
 
 const STATS = [
   { count: 5, suffix: "K+", label: "Hours Of Team Collab" },
-  { count: 100, suffix: "+", label: "Projects In 5 Domains" },
+  { count: 100, suffix: "+", label: "Projects In Multiple Domains" },
   { count: 10, suffix: "+", label: "Years Of Experience" },
   {
     words: ["Global", "Expansive", "Limitless", "Holistic", "Universal", "Inclusive", "Boundless"],

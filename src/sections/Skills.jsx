@@ -75,17 +75,9 @@ export default function Skills() {
                       <Flyout label={icon.name}>
                         {/* Animated icons are components; the rest are image files */}
                         {icon.Component ? (
-                          <icon.Component
-                            title={icon.name}
-                            className="size-16 lg:size-24"
-                          />
+                          <icon.Component title={icon.name} className="size-16 lg:size-24" />
                         ) : (
-                          <img
-                            src={icon.src}
-                            alt={icon.name}
-                            loading="lazy"
-                            className="size-16 lg:size-24"
-                          />
+                          <img src={icon.src} alt={icon.name} loading="lazy" className="size-16 lg:size-24" />
                         )}
                       </Flyout>
                     </li>
@@ -117,7 +109,7 @@ export default function Skills() {
           </p>
         </div>
         <p className="absolute inset-x-4 bottom-0 z-10 mx-auto max-w-case-study translate-y-10 rounded-2xl bg-background p-5 text-center text-heading text-foreground md:inset-x-16 md:p-8 md:text-heading-xl shadow-glow">
-          The greatest reward in my career are the friends and connections I made around the world.
+          The greatest reward in my career are the friends and connections I have made around the world.
         </p>
       </div>
 
